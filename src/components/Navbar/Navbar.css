@@ -1,3 +1,6 @@
+body{
+    font-family:'Poppins';
+}
 .navbar {
     display: flex;
     justify-content: space-between;
@@ -22,7 +25,7 @@
     display: flex;
     gap: 50px;
     align-items: center;
-    font-size: 20px;
+    font-size: 17px;
   }
 
   .navbar-links li a {
@@ -38,13 +41,17 @@
   }
 
   .login_button {
+    font-family: Poppins;
+    width: 140px;
+    font-weight: 500;
     background-color: #20BFA5;
     color: #fff;
     padding: 10px 20px;
     border: none;
-    border-radius: 5px;
+    border-radius: 30px;
     cursor: pointer;
-    font-size: 16px;
+    font-size: 15px;
+
     transition: background-color 0.3s ease;
   }
 

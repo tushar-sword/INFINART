@@ -15,7 +15,7 @@ const Navbar = () => {
 
       </ul>
 
-      <button className='login_button'>Login / Signup</button>
+      <button className='login_button'>Sign in</button>
         </nav>
     );
 };
