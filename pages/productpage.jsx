@@ -2,7 +2,7 @@ import React from 'react';
 import Navbar from '../src/components/Navbar/Navbar.jsx';
 
 
-function ProductPage() {
+function Productpage() {
     return (
         <div>
             <Navbar></Navbar>
@@ -10,3 +10,6 @@ function ProductPage() {
         </div>
     );
 }
+
+
+export default Productpage;
