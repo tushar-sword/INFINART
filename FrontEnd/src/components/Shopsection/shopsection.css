@@ -1,6 +1,7 @@
 .shop-section {
     padding: 40px 20px;
     background-color: #e0f8f3;
+    /* background-color: #f8fafa; */
     border-radius: 10px;
   }
   
@@ -13,8 +14,9 @@
   }
   
   .shop-grid {
+    border-radius: 30px;
     padding : 20px;
-    background-color: #e0f8f3;
+    background-color: #f8fafa;
     display: grid;
     grid-template-columns: repeat(3, 1fr); /* 3 columns */
     grid-template-areas: 
@@ -48,36 +50,37 @@
 
   .a {
     grid-area: a;
-    background-image: url("https://images.pexels.com/photos/264787/pexels-photo-264787.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2");
+    background-image:url('../../Images/Gemini_Generated_Image_njnl3rnjnl3rnjnl.jpg');
+    object-fit:contain;
   }
   
   .b {
     grid-area: b;
-    background-image: url("https://plus.unsplash.com/premium_photo-1676049342411-c118fe1570b2?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D");
+    background-image: url("../../Images/Leonardo_Phoenix_09_Give_me_images_in_which_there_is_only_hum_3.jpg");
   }
   
   .c {
     grid-area: c;
-    background-image: url("https://plus.unsplash.com/premium_photo-1680303989816-a73f8e8da041?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D");
+    background-image: url("../../Images/Leonardo_Phoenix_09_A_stunning_highfashion_photograph_featurin_3.jpg");
   }
   
   .d {
     grid-area: d;
-    background-image: url("https://images.unsplash.com/photo-1508873696983-2dfd5898f08b?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D");
+    background-image: url("../../Images/Leonardo_Phoenix_09_A_stunning_highfashion_photograph_featurin_3.jpg");
   }
   
   .e {
     grid-area: e;
-    background-image: url("https://images.unsplash.com/photo-1636227597176-c554bcbee419?q=80&w=2071&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D");
+    background-image: url("../../Images/Leonardo_Phoenix_09_exquisite_high_fashion_still_life_photogra_1.jpg");
   }
   
   .f {
     grid-area: f;
-    background-image: url("https://images.unsplash.com/photo-1544277879-42659615e478?q=80&w=2076&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D");
+    background-image: url("../../Images/Leonardo_Phoenix_09_A_highfashion_photograph_featuring_a_beaut_1.jpg");
   }
   
   .g {
     grid-area: g;
-    background-image: url("https://plus.unsplash.com/premium_photo-1666299721610-5853da3427ac?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D");
+    background-image: url("../../Images/Leonardo_Phoenix_09_Capture_exquisite_high_fashion_photography_3.jpg");
   }
   

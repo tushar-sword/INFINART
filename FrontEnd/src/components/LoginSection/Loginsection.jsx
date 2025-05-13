@@ -1,39 +1,52 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-
+import React, { useState, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import './Loginsection.css';
 
+import { useDispatch, useSelector } from 'react-redux';
+import { loginUser } from '../../Redux/authSlice'; // update path based on your folder
+
 const Login = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [userdata, setUserdata] = useState({});
+
+  const { user, loading, error, token } = useSelector((state) => state.user);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const user = { email, password };
-    setUserdata(user);
-    setEmail("");
-    setPassword("");
-    console.log(userdata);
-  }
+    dispatch(loginUser({ email, password }));
+  };
+
+  useEffect(() => {
+    if (user && token) {
+      navigate('/'); // redirect to homepage after login
+    }
+  }, [user, token, navigate]);
 
   return (
     <div className="login-background">
       <div className="login-container">
         <h2>Login</h2>
-        <form onSubmit={(e) => handleSubmit(e)}>
+        <form onSubmit={handleSubmit}>
           <label>Email</label>
-          <input required value={email} 
-          onChange={(e)=>{
-            setEmail(e.target.value);
-          }} type="email" placeholder="Enter your email" />
+          <input
+            required
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            type="email"
+            placeholder="Enter your email"
+          />
 
           <label>Password</label>
-          <input required value={password} 
-          onChange={(e)=>{
-            setPassword(e.target.value);
-          }} type="password" placeholder="Enter your password" />
+          <input
+            required
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            type="password"
+            placeholder="Enter your password"
+          />
 
           <div className="login-options">
             <label>
@@ -43,10 +56,15 @@ const Login = () => {
             <a href="#">Forget Password</a>
           </div>
 
-          <button type="submit">Log in</button>
+          <button type="submit" disabled={loading}>
+            {loading ? "Logging in..." : "Log in"}
+          </button>
         </form>
+
+        {error && <p className="error-msg">{error}</p>}
+
         <p>
-          Don’t have an account <Link to={"/register"}>Register</Link>
+          Don’t have an account? <Link to={"/register"}>Register</Link>
         </p>
       </div>
     </div>
