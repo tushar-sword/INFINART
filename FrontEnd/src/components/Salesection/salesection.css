@@ -54,3 +54,14 @@
     font-weight: 300;
   }
   
+  .sale-heading-line {
+    text-align: center;
+    font-size: 0.67rem;
+   font-weight: 700; 
+    color: #333;
+    margin-bottom: 1rem;
+    margin-top: 20px;
+    letter-spacing: 5px;
+    font-family: poppins;
+  }
+  

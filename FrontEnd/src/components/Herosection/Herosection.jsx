@@ -1,21 +1,19 @@
 import React from "react";
 import {useState, useEffect} from "react";
-import "./HeroSection.css";
+import banner1 from '../../Images/IMG_1.jpeg'
+import banner2 from '../../Images/IMG_2.png'
+import banner3 from '../../Images/IMG_3.jpg'
+import banner4 from '../../Images/IMG_4.jpg'
+import banner5 from '../../Images/IMG_5.jpg'
+import banner6 from '../../Images/IMG_6.jpg'
+import "./Herosection.css";
 
 
 const HeroSection = () => {
 
-  const largeBannerImages=[
-     "https://images.unsplash.com/photo-1561715276-a2d087060f1d?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    'https://plus.unsplash.com/premium_photo-1677995700941-100976883af7?q=80&w=2123&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-    'https://images.unsplash.com/photo-1541574823565-f1d660886187?q=80&w=2072&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
-  ];
+  const largeBannerImages=[banner2, banner4, banner6];
 
-  const smallBannerImages=[
-    'https://images.unsplash.com/photo-1555041469-a586c61ea9bc',
-    'https://images.unsplash.com/photo-1503602642458-232111445657?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
-
-  ];
+  const smallBannerImages=[banner1, banner3, banner5];
 
   const [currentLargeImage, setCurrentLargeImage] = useState(0);
   const [currentSmallImage, setCurrentSmallImage] = useState(0);

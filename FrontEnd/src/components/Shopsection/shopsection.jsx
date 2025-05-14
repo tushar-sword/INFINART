@@ -1,21 +1,31 @@
-import react from 'react';
+import React from 'react';
 import './shopsection.css';
 
 function Shopsection() {
-    return (
-        <div className="shop-section">
-  <div className="shop-heading">Shop for Special Occasions →</div>
-  <div className="shop-grid">
-    <div className="grid-item a"></div>
-    <div className="grid-item b"></div>
-    <div className="grid-item c"></div>
-    <div className="grid-item d"></div>
-    <div className="grid-item e"></div>
-    <div className="grid-item f"></div>
-    <div className="grid-item g"></div>
-  </div>
-</div>
+  const items = [
+    { class: "a", label: "House Party" },
+    { class: "b", label: "Dinner Dates" },
+    { class: "c", label: "Baby Shower" },
+    { class: "d", label: "Anniversaries" },
+    { class: "e", label: "Diwali Lights" },
+    { class: "f", label: "Eid" },
+    { class: "g", label: "Christmas Eve" }
+  ];
 
-    );
+  return (
+    <div className="shop-section">
+      <div className="shop-heading">Shop for Special Occasions →</div>
+      <div className="shop-grid">
+        {items.map((item, index) => (
+          <div className={`grid-item ${item.class}`} key={index}>
+            <div className="overlay">
+              <span className="item-label">{item.label}</span>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
 }
+
 export default Shopsection;

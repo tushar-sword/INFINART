@@ -18,6 +18,7 @@ const bestSellers = [
     name: "Charm",
     image: "https://images.pexels.com/photos/2679323/pexels-photo-2679323.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
   },
+  
 ];
 
 const BestSellers = () => {
@@ -42,7 +43,13 @@ const BestSellers = () => {
         <div className="slider" ref={containerRef}>
           {bestSellers.map((item, index) => (
             <div className="seller-card" key={index}>
-              <img src={item.image} alt={item.name} />
+              <div className="image-wrapper">
+                <img src={item.image} alt={item.name} />
+                <div className="shop-details">
+                  <p>{item.name}</p>
+                  <span>Click for more info</span>
+                </div>
+              </div>
               <p>{item.name}</p>
             </div>
           ))}

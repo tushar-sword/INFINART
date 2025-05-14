@@ -1,6 +1,8 @@
 import React from 'react';
 import './Footersection.css';
-import { FaFacebookF, FaInstagram, FaPinterest, FaTwitter } from 'react-icons/fa';
+import { FaInstagram, FaLinkedin} from 'react-icons/fa';
+import { Link } from 'react-router-dom';
+
 
  function Footersec() {
   return (
@@ -9,15 +11,25 @@ import { FaFacebookF, FaInstagram, FaPinterest, FaTwitter } from 'react-icons/fa
         
         {/* Branding & Social */}
         <div className="footer-section">
-          <h2 className="footer-logo">Infinart</h2>
+          <h2 className="footer-logo"><Link to="/" onClick={() => window.scrollTo(0, 0)}>Infinart</Link>
+          </h2>
           <p className="footer-desc">
             Curated gifts & timeless decor for every space.
           </p>
           <div className="footer-social">
+          <a href="https://www.instagram.com/aestheticommerce" 
+            target="_blank" 
+            rel="noopener noreferrer" 
+            className="social-icon">
             <FaInstagram />
-            <FaPinterest />
-            <FaFacebookF />
-            <FaTwitter />
+          </a>
+          <a 
+            href="https://www.linkedin.com/company/aestheticommerce/" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="social-icon">
+            <FaLinkedin />
+          </a>
           </div>
         </div>
 
@@ -25,11 +37,10 @@ import { FaFacebookF, FaInstagram, FaPinterest, FaTwitter } from 'react-icons/fa
         <div className="footer-section">
           <h3>Quick Links</h3>
           <ul>
-            <li>Home</li>
-            <li>Shop</li>
-            <li>Categories</li>
-            <li>About Us</li>
-            <li>Contact</li>
+            <li><Link to="/products">Product</Link></li>
+            <li><Link to="/shops">Shops</Link></li>
+            <li><Link to="/aboutus">About Us</Link></li>
+            <li><Link to="/contact">Contact</Link></li>
           </ul>
         </div>
 
@@ -37,11 +48,11 @@ import { FaFacebookF, FaInstagram, FaPinterest, FaTwitter } from 'react-icons/fa
         <div className="footer-section">
           <h3>Customer Support</h3>
           <ul>
-            <li>Help Center</li>
-            <li>Shipping & Returns</li>
-            <li>FAQs</li>
-            <li>Track Order</li>
-            <li>Refund Policy</li>
+            <li><Link to="/help">Help Center</Link></li>
+            <li><Link to="/ship">Shipping & Returns</Link></li>
+            <li><Link to="/faq">FAQs</Link></li>
+            <li><Link to="/track">Track Orrder</Link></li>
+            <li><Link to="/refund">Refund Policy</Link></li>
           </ul>
         </div>
 

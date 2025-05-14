@@ -4,7 +4,7 @@ import "./Coustomer.css";
 const reviews = [
   {
     name: "Alex Gardener",
-    img: "https://plus.unsplash.com/premium_photo-1670282393309-70fd7f8eb1ef?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8Z2lybHxlbnwwfHwwfHx8MA%3D%3D", // You can replace with an actual image URL
+    img: "https://images.pexels.com/photos/91227/pexels-photo-91227.jpeg?auto=compress&cs=tinysrgb&w=600", // You can replace with an actual image URL
     rating: 5,
     review:
       "The products are lit and I really enjoyed the gift sent to me through your website. They were perfect!",
@@ -18,14 +18,14 @@ const reviews = [
   },
   {
     name: "Ali Faisal",
-    img: "https://plus.unsplash.com/premium_photo-1670282393309-70fd7f8eb1ef?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8Z2lybHxlbnwwfHwwfHx8MA%3D%3D",
+    img: "https://images.pexels.com/photos/1681010/pexels-photo-1681010.jpeg?auto=compress&cs=tinysrgb&w=600",
     rating: 4,
     review:
       "Amazing selection of gifts. Will definitely come back for more!",
   },
   {
     name: "John Doe",
-    img: "https://plus.unsplash.com/premium_photo-1670282393309-70fd7f8eb1ef?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8Z2lybHxlbnwwfHwwfHx8MA%3D%3D",
+    img: "https://images.pexels.com/photos/262391/pexels-photo-262391.jpeg?auto=compress&cs=tinysrgb&w=600",
     rating: 4,
     review:
       "Amazing selection of gifts. Will definitely come back for more!",
