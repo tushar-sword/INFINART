@@ -137,4 +137,8 @@ const BlogForm = ({ onSubmit, selectedBlog, clearEdit }) => {
   );
 };
 
+<<<<<<< HEAD
 export default BlogForm;
+=======
+export default BlogForm;
+>>>>>>> edfc986adc6b34cce28f5f567e8c860d87e85ef7
