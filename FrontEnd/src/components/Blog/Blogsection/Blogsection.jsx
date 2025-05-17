@@ -73,8 +73,7 @@ const BlogSection = () => {
   );
 };
 
-<<<<<<< HEAD
+
+
 export default BlogSection;
-=======
-export default BlogSection;
->>>>>>> edfc986adc6b34cce28f5f567e8c860d87e85ef7
+

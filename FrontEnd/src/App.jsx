@@ -5,11 +5,9 @@ import Productpage from '../pages/productpage';
 import Loginpage from '../pages/Loginpage';
 import Registerpage from '../pages/Registerpage';
 import Contactpage from '../pages/contactpage';
-<<<<<<< HEAD
-import Blog from '../pages/blogpage';
-=======
-import Blog from '../pages/blog';
->>>>>>> edfc986adc6b34cce28f5f567e8c860d87e85ef7
+
+import Blog from "../pages/blogpage.jsx";
+
 
 function App() {
   return (
@@ -21,7 +19,7 @@ function App() {
         <Route path="/login" element={<Loginpage />} />
         <Route path="/register" element={<Registerpage />} />
         <Route path="/contact" element={<Contactpage />} />
-        <Route path="/blog" element={<Blog />} />
+        {/* <Route path="/blog" element={<Blog />} /> */}
         {/* Add more routes as needed */}
       
       </Routes>
