@@ -67,3 +67,4 @@ const BlogList = ({ blogs = [], onDelete = () => {}, onEdit = () => {} }) => {
 };
 
 export default BlogList;
+
