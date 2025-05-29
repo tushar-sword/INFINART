@@ -1,0 +1,93 @@
+.contact-container {
+    max-width: 1200px;
+    margin: auto;
+    padding: 40px 20px;
+    font-family: 'Arial', sans-serif;
+   
+  }
+  
+  h1 {
+    font-size: 36px;
+    font-weight: bold;
+   
+  }
+  
+  .contact-subtitle {
+    margin-top: 10px;
+    font-size: 16px;
+    color: black;
+    max-width: 800px;
+  }
+  
+  .contact-actions {
+    margin-top: 30px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+  }
+  
+  .contact-actions button {
+    padding: 10px 20px;
+    font-size: 14px;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .chat-btn {
+    background-color: #20bfa5;
+    color: white;
+  }
+  
+  .call-btn {
+    background-color:#20bfa5;
+    color: white;
+  }
+  
+  .email-btn {
+    background-color: #20bfa5;
+    color: white;
+  }
+  
+  .contact-form-section {
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 40px;
+    gap: 40px;
+  }
+  
+  .contact-form {
+    flex: 1;
+    min-width: 300px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .contact-form input,
+  .contact-form textarea {
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    width: 100%;
+   font-family: 'Arial', sans-serif;
+  }
+  
+  .submit-btn {
+    background-color:  #20bfa5;
+    color: white;
+    border: none;
+    padding: 12px;
+    font-size: 14px;
+    cursor: pointer;
+    font-family: 'Arial', sans-serif;
+  }
+  
+  .contact-image img {
+    max-width: 150%;
+    height: 400px;
+  justify-content: center ;
+  }

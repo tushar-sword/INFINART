@@ -25,14 +25,14 @@ const ScrollSection = () => {
     const autoScroll = () => {
       if (container) {
         if (container.scrollLeft + scrollAmount >= container.scrollWidth) {
-          container.scrollTo({ left: 0, behavior: "smooth" });
+          container.scrollTo({ left: 0, behavior: "smooth" });  // from last to start
         } else {
-          container.scrollBy({ left: scrollAmount, behavior: "smooth" });
+          container.scrollBy({ left: scrollAmount, behavior: "smooth" }); // move rightwards
         }
       }
     };
 
-    intervalId = setInterval(autoScroll, 8000); // auto scroll every 5 seconds
+    intervalId = setInterval(autoScroll, 8000); // auto scroll every 8 seconds
 
     return () => clearInterval(intervalId);
   }, []);

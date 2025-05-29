@@ -64,3 +64,56 @@ module.exports.userProfile = async (req, res) => {
   // Dummy response for now
   res.status(200).json({ message: "User profile accessed successfully" });
 };
+
+//handle Blog creation
+module.exports.createBlog = async (req, res) => {
+  const error = validationResult(req);
+  if (!error.isEmpty()) {
+    return res.status(404).json({ message: "Invalid data" });
+  }
+
+  console.log(req.body);
+  const { title, content, author } = req.body;
+
+  if (!title || !content || !author) {
+    return res.status(400).json({ message: 'Title, content, and author are required' });
+  }
+
+  // Check if an image is uploaded
+  let imageUrl = null;
+  if (req.file) {
+    imageUrl = `/uploads/${req.file.filename}`; // The image will be stored under 'uploads/' folder
+  }
+
+  const blog = await userService.createBlog({
+    title,
+    content,
+    author,
+    image: imageUrl, // Store image URL/path
+  });
+
+  res.status(201).json({ blog });
+};
+
+//handle Get all blogs
+module.exports.getBlogs = async (req, res) => {
+  const blogs = await userService.getAllBlogs();
+  res.status(200).json({ blogs });
+};
+
+//handle Get blog by id
+module.exports.getBlog = async (req, res) => {
+  const { id } = req.params;
+
+  if (!id) {
+    return res.status(400).json({ message: 'Blog ID is required' });
+  }
+
+  const blog = await userService.getBlogById(id);
+
+  if (!blog) {
+    return res.status(404).json({ message: 'Blog not found' });
+  }
+
+  res.status(200).json({ blog });
+};

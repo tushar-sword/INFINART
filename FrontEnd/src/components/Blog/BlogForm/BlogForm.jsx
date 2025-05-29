@@ -1,8 +1,13 @@
 import React, { useState, useRef, useEffect } from "react";
-import "./BlogForm.css"; // External CSS
+import { useDispatch, useSelector } from "react-redux";
+import { createBlog } from "../../../Redux/blogSlice"; 
+import "./BlogForm.css";
 
-const BlogForm = ({ onSubmit, selectedBlog, clearEdit }) => {
-  const [name, setName] = useState("");
+const BlogForm = ({ selectedBlog, clearEdit, onBack }) => {
+  const dispatch = useDispatch();
+  const { loading, error } = useSelector((state) => state.blogs);
+
+  const [author, setAuthor] = useState("");
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [image, setImage] = useState("");
@@ -10,7 +15,7 @@ const BlogForm = ({ onSubmit, selectedBlog, clearEdit }) => {
 
   useEffect(() => {
     if (selectedBlog) {
-      setName(selectedBlog.name);
+      setAuthor(selectedBlog.author);
       setTitle(selectedBlog.title);
       setContent(selectedBlog.content);
       setImage(selectedBlog.image);
@@ -28,44 +33,54 @@ const BlogForm = ({ onSubmit, selectedBlog, clearEdit }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!name || !title || !content || !image) {
+    if (!author || !title || !content || !image) {
       alert("All fields are required!");
       return;
     }
 
-    onSubmit({
-      id: selectedBlog?.id || Date.now(),
-      name,
-      title,
-      content,
-      image,
-    });
+    const formData = new FormData();
+    formData.append("author", author);
+    formData.append("title", title);
+    formData.append("content", content);
+    formData.append("image", fileInputRef.current.files[0]);
 
-    setName("");
-    setTitle("");
-    setContent("");
-    setImage("");
-    clearEdit();
+    dispatch(createBlog(formData))
+      .unwrap()
+      .then(() => {
+        clearEdit?.(); // optional clear edit
+        onBack();      // go back after successful submission
+      })
+      .catch((err) => {
+        console.error("Blog submission failed", err);
+      });
   };
 
   return (
     <div className="blog-form-container">
       <div className="blog-form-card">
         <div className="blog-form-content">
+        
+          {/* Back Button */}
+          <button className="back-button" onClick={onBack}>
+            ⬅ Back to Blog Home
+          </button>
+
           <h1 className="blog-form-title">
             {selectedBlog ? "Edit Blog" : "Write a Blog"}
           </h1>
+
+          {error && <p className="error-message">Error: {error}</p>}
 
           <form onSubmit={handleSubmit}>
             <div className="blog-form-grid">
               <div className="blog-form-fields">
                 <div className="blog-form-row">
                   <div className="blog-form-group">
-                    <label>Full Name</label>
+                    <label>Author</label>
                     <input
                       type="text"
-                      value={name}
-                      onChange={(e) => setName(e.target.value)}
+                      value={author}
+                      onChange={(e) => setAuthor(e.target.value)}
                       required
                     />
                   </div>
@@ -104,7 +119,6 @@ const BlogForm = ({ onSubmit, selectedBlog, clearEdit }) => {
                       </div>
                     )}
                   </div>
-
                   <div className="upload-controls">
                     <p>Drag & Drop or Browse</p>
                     <button
@@ -115,9 +129,9 @@ const BlogForm = ({ onSubmit, selectedBlog, clearEdit }) => {
                     </button>
                     <input
                       type="file"
+                      accept="image/*"
                       ref={fileInputRef}
                       onChange={handleImageChange}
-                      accept="image/*"
                       className="hidden"
                     />
                   </div>
@@ -126,8 +140,12 @@ const BlogForm = ({ onSubmit, selectedBlog, clearEdit }) => {
             </div>
 
             <div className="submit-button-wrapper">
-              <button type="submit">
-                {selectedBlog ? "Update Blog" : "Submit Blog"}
+              <button type="submit" disabled={loading}>
+                {loading
+                  ? "Submitting..."
+                  : selectedBlog
+                  ? "Update Blog"
+                  : "Submit Blog"}
               </button>
             </div>
           </form>

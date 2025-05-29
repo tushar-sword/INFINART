@@ -1,13 +1,15 @@
 import  {createSlice , createAsyncThunk} from '@reduxjs/toolkit';
 import  authService from './authService';
 
+const storedUser = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : null;
+
 const initialState = {
-    user: null,
-    token: null,
-    msg: '',
-    loading: false,
-    error: null,
-  };
+  user: storedUser ? storedUser.user : null,
+  token: storedUser ? storedUser.token : null,
+  msg: '',
+  loading: false,
+  error: null,
+};
 
 
   export const registerUser = createAsyncThunk('auth/registerUser',
@@ -60,7 +62,7 @@ const authSlice = createSlice({
             state.user = action.payload.user;
             state.token = action.payload.token;
             state.msg = action.payload.msg;
-            localStorage.setItem('user', JSON.stringify(action.payload));
+            // localStorage.setItem('user', JSON.stringify(action.payload));
           })
           .addCase(registerUser.rejected, (state, action) => {
             state.loading = false;
