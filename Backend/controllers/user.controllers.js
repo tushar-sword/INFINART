@@ -60,10 +60,16 @@ module.exports.loginUser = async (req, res, next) => {
 };
 
 //handle User profile
-module.exports.userProfile = async (req, res) => {
-  // Dummy response for now
-  res.status(200).json({ message: "User profile accessed successfully" });
+module.exports.userProfile = (req, res) => {
+  if (!req.user) {
+    return res.status(404).json({ success: false, user: null });
+  }
+  res.status(200).json({
+    success: true,
+    user: req.user
+  });
 };
+
 
 //handle Blog creation
 module.exports.createBlog = async (req, res) => {

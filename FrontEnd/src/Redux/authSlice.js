@@ -4,14 +4,16 @@ import  authService from './authService';
 const storedUser = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : null;
 
 const initialState = {
-  user: storedUser ? storedUser.user : null,
-  token: storedUser ? storedUser.token : null,
+  // user: storedUser ? storedUser.user : null,
+  // token: storedUser ? storedUser.token : null,
+  user : null,
+  token:  null,
   msg: '',
   loading: false,
   error: null,
 };
 
-
+// This is an Action So when we register user it will get all the data and return its data 
   export const registerUser = createAsyncThunk('auth/registerUser',
      async (userData, thunkAPI) => {
         try {
@@ -62,7 +64,7 @@ const authSlice = createSlice({
             state.user = action.payload.user;
             state.token = action.payload.token;
             state.msg = action.payload.msg;
-            // localStorage.setItem('user', JSON.stringify(action.payload));
+            localStorage.setItem('user', JSON.stringify(action.payload));
           })
           .addCase(registerUser.rejected, (state, action) => {
             state.loading = false;

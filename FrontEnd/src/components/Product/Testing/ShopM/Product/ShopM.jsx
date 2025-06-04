@@ -1,5 +1,6 @@
-import React, { useState } from "react";
-import { useProducts } from "../Context/ProductContext";
+import React, { useState, useEffect } from "react"; 
+import { useDispatch, useSelector } from 'react-redux';
+import { setSortOption, setFilterOptions, filterProducts } from '../../../../../Redux/productSlice';  // Adjusted import path
 import ProductCard from "../ProductCard/ProductCard";
 import FilterDrawer from "../FilterDrawer/FilterDrawer";
 import SortDropdown from "../SortDropdown/SortDropdown";
@@ -8,38 +9,38 @@ import { Button } from "../../../../../ui/Button";
 import "./ShopM.css";
 
 const Shop = () => {
-  const {
-    filteredProducts,
-    sortOption,
-    setSortOption,
-    filterOptions,
-    updateFilterOptions,
-    updatedSortOptions,
-  } = useProducts();
+  const dispatch = useDispatch();
+  const { 
+    filteredProducts, 
+    sortOption, 
+    filterOptions 
+  } = useSelector(state => state.products);
 
   const productCount = filteredProducts ? filteredProducts.length : 0;
   const [showFilterDrawer, setShowFilterDrawer] = useState(false);
 
+  // Sort options defined locally as per Redux slice
+  const sortOptions = [
+    { label: 'Relevance', value: 'default', direction: 'asc' },
+    { label: 'Lowest Price', value: 'price', direction: 'asc' },
+    { label: 'Highest Price', value: 'price', direction: 'desc' },
+    { label: 'Top Customer Reviews', value: 'rating', direction: 'desc' },
+    { label: 'Most Recent', value: 'id', direction: 'desc' },
+  ];
+
+  useEffect(() => {
+    dispatch(filterProducts());
+  }, [dispatch]);
+
   const handleSort = (option) => {
-    if (setSortOption) {
-      setSortOption(option);
-    }
+    dispatch(setSortOption(option));
+    dispatch(filterProducts());
   };
 
   const handleFilterChange = (newFilters) => {
-    if (updateFilterOptions) {
-      updateFilterOptions(newFilters);
-    }
+    dispatch(setFilterOptions(newFilters));
+    dispatch(filterProducts());
   };
-
-  const sortOptions = updatedSortOptions || [
-    { label: "Default", value: "default", direction: "asc" },
-    { label: "Price (Low to High)", value: "price", direction: "asc" },
-    { label: "Price (High to Low)", value: "price", direction: "desc" },
-    { label: "Top Customer Rating", value: "rating", direction: "desc" },
-    { label: "Most Recent", value: "id", direction: "desc" },
-    { label: "Discount", value: "discountPercentage", direction: "desc" },
-  ];
 
   return (
     <div className="shop-container">

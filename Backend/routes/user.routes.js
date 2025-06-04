@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const userController = require("../controllers/user.controllers");
+const {protect} = require("../Middleware/authMiddleware")
 const { body } = require("express-validator");
 const multer = require("multer");
 const path = require("path");
@@ -61,7 +62,7 @@ router.post(
 );
 
 // Get user profile
-router.post("/userProfile", userController.userProfile);
+router.get('/profile', protect, userController.userProfile);
 
 // Create blog (with image upload)
 router.post(

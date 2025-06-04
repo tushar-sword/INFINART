@@ -1,35 +1,13 @@
-import React, { useState, useEffect,useRef } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { useAuth } from "../Context/AuthContext.jsx";
-import RatingStars from "../../../../Product/RatingStars/RatingStars.jsx";
-import { Heart, ShoppingCart, Star } from "lucide-react";
+import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+
+import { Heart, Star } from "lucide-react";
+
 import "./ProductCard.css";
 
-import {toast} from 'react-toastify';
-
 const ProductCard = ({ product }) => {
-  const {
-    isAuthenticated,
-    addToFavorites,
-    removeFromFavorites,
-    isFavorite,
-    toggleFavorite,
-    isInCart,
-    addToCart,
-  } = useAuth();
-
- // Calculate discount percentage
-  const calculateDiscount = (actual, striked) => {
-    if (!actual || !striked || striked <= actual) return 0;
-    return Math.round(((striked - actual) / striked) * 100);
-  };
-
-  const discount = calculateDiscount(product.price, product.originalPrice);
-
-
   const [isHovering, setIsHovering] = useState(false);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  const navigate = useNavigate();
 
   useEffect(() => {
     let interval;
@@ -41,40 +19,15 @@ const ProductCard = ({ product }) => {
     return () => clearInterval(interval);
   }, [isHovering, product.images.length]);
 
-  const handleFavoriteToggle = (e) => {
-    e.preventDefault();
-    // toggleFavorite(product);
-    e.stopPropagation();
-
-    if (!isAuthenticated) {
-      toast.error("Please sign in to add items to your favorites");
-      navigate("/login");
-      return;
-    }
-
-    if (isFavorite(product.id)) {
-      removeFromFavorites(product.id);
-      toast.success(`${product.name} removed from favorites`);
-    } else {
-      addToFavorites(product.id);
-      toast.success(`${product.name} added to favorites`);
-    }
+  // Discount calculation
+  const calculateDiscount = (actual, striked) => {
+    if (!actual || !striked || striked <= actual) return 0;
+    return Math.round(((striked - actual) / striked) * 100);
   };
 
-  const handleAddToCart = (e) => {
-    e.preventDefault();
-    e.stopPropagation();
+  const discount = calculateDiscount(product.price, product.originalPrice);
 
-    if (!isAuthenticated) {
-      toast.error("Please sign in to add items to your cart");
-      navigate("/login");
-      return;
-    }
-
-    addToCart(product.id, 1);
-    toast.success(`${product.name} added to cart`);
-  };
-
+  // Render rating stars
   const renderRating = () => {
     const fullStars = Math.floor(product.rating);
     const hasHalfStar = product.rating - fullStars >= 0.5;
@@ -108,7 +61,6 @@ const ProductCard = ({ product }) => {
     }
 
     return (
-      
       <div className="rating">
         {stars}
         <span style={{ fontSize: "0.7rem", marginLeft: "5px" }}>
@@ -117,14 +69,6 @@ const ProductCard = ({ product }) => {
       </div>
     );
   };
-
-  const discountPercentage =
-    product.originalPrice && product.originalPrice > product.price
-      ? Math.round(
-          ((product.originalPrice - product.price) / product.originalPrice) *
-            100
-        )
-      : 0;
 
   return (
     <Link
@@ -138,16 +82,17 @@ const ProductCard = ({ product }) => {
     >
       {discount > 0 && <div className="discount-badge">{discount}% OFF</div>}
 
+      {/* Static favorite button – no auth logic */}
       <button
-        className={`favorite-btn ${isHovering ? "visible" : "hidden"} ${
-          isFavorite(product.id) ? "active" : ""
-        }`}
-        onClick={handleFavoriteToggle}
+        className={`favorite-btn ${isHovering ? "visible" : "hidden"}`}
+        onClick={(e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          // No favorite handling – just a placeholder effect
+          alert("Favorite functionality is disabled in this version.");
+        }}
       >
-        <Heart
-          size={20}
-          fill={isFavorite(product.id) ? "currentColor" : "none"}
-        />
+        <Heart size={20} fill="none" />
       </button>
 
       <div className="image-container">
@@ -165,28 +110,33 @@ const ProductCard = ({ product }) => {
 
       <div className="product-info">
         <h3 className="title">{product.name}</h3>
-        <div className="rating">
-          <RatingStars rating={product.rating} />
-        </div>
+        {renderRating()}
         <div className="price-stock">
           <div className="price">
             <span className="actual">₹{product.price}</span>
-           
-              <span className="striked">
-                {product.originalPrice}
-              </span>
-             
+            {product.originalPrice && (
+              <span className="striked">₹{product.originalPrice}</span>
+            )}
           </div>
-       <span className={`stock ${product.inStock ? "in-stock" : "out-of-stock"}`}>
-              {product.inStock ? "In Stock" : "Out of Stock"}
-            
+          <span
+            className={`stock ${product.inStock ? "in-stock" : "out-of-stock"}`}
+          >
+            {product.inStock ? "In Stock" : "Out of Stock"}
           </span>
         </div>
       </div>
 
+      {/* Static add to cart button – no auth logic */}
       <div className={`add-to-cart ${isHovering ? "visible" : ""}`}>
-        <button disabled={!product.inStock} onClick={handleAddToCart}>
-          
+        <button
+          disabled={!product.inStock}
+          onClick={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            // No cart handling – just a placeholder effect
+            alert("Add to Cart functionality is disabled in this version.");
+          }}
+        >
           <span>Add to Cart</span>
         </button>
       </div>

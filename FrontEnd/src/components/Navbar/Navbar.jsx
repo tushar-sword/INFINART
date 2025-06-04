@@ -57,7 +57,7 @@ const Navbar = () => {
 
   return (
     <nav className="navbar">
-      <div className="navbar-logo">Infinart</div>
+      <div className="navbar-logo">Aestheticommerce</div>
 
       <div className='make-space'>
         <ul className="navbar-links">

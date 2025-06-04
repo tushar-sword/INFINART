@@ -1,3 +1,6 @@
+// User fills form ➡️ frontend dispatches Redux action (like `registerUser`) ➡️ Redux action sends data to backend API ➡️ backend saves user in MongoDB and returns `{ user, token }` ➡️ Redux reducer (`authSlice`) stores user and token in Redux store ➡️ optionally, `authSlice` also updates localStorage with the user and token.
+ 
+
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import './Registersection.css';

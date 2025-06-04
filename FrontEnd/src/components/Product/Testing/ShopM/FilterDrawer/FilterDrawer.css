@@ -1,8 +1,10 @@
+
 /* Main container styles */
+
 .filter-drawer-content {
   margin-top: 42px;
   width: 300px;
-  /* height: 500px; */
+  height: 700px;
   /* padding: -5px; */
   overflow-y: auto;
   
@@ -18,7 +20,7 @@
   display: flex;
   flex-direction: column;
   height: 720px;
-  width: 420px;
+  width: 400px;
   background-color: #fff;
 }
 
@@ -169,18 +171,19 @@
   flex: 1;
 }
 .reset-btn:hover {
-  background-color: #2d3341;
-  color: #272f36;
+  background-color:#20bfa5;
+  color: white;
 }
 
 .apply-btn {
   flex: 1;
-  background-color: black;
+  background-color: #20bfa5;
+ 
   color: white;
 }
 
 .apply-btn:hover {
-  background-color: #1f2937;
+  background-color: #1cdfbe;;
 }
 
 /* Animation Keyframes */
@@ -277,13 +280,13 @@ filter-drawer-content {
 
 .apply-btn {
   flex: 1;
-  background-color: black;
+  background-color:#20bfa5;
+  /* font-size: 19px; */
   color: white;
+  border: none;
 }
 
-.apply-btn:hover {
-  background-color: #1f2937;
-}
+
 
 /* All existing filter section styles remain the same */
 .filter-section {
