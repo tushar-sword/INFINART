@@ -1,11 +1,11 @@
 import axios from 'axios';
-
-const API_URL = 'http://localhost:5000/users'; // Change if needed
+const API_URL = import.meta.env.API_URL;
+// const API_URL = 'http://localhost:5000/users'; // Change if needed
 
 // Function to check server status and get bootTime
 const checkServerStatus = async () => {
   try {
-    const res = await axios.get('http://localhost:5000/api/server-status'); // Endpoint to fetch bootTime
+    const res = await axios.get(`${API_URL}/api/server-status`); // Endpoint to fetch bootTime
     return res.data.bootTime; // Return the bootTime from server
   } catch (error) {
     throw new Error('Failed to fetch server status');

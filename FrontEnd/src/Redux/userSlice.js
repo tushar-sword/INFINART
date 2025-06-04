@@ -1,12 +1,14 @@
 import  {createSlice , createAsyncThunk} from '@reduxjs/toolkit';
 import axios from 'axios';
 
+const API_URL = import.meta.env.API_URL;
+
 
  export const fetchUserProfile = createAsyncThunk('user/fetchUserProfile',
      async (token, thunkAPI) => {
          console.log('Thunk received token:', token); // Add this
         try {
-             const profile = await axios.get('http://localhost:5000/users/profile', {
+             const profile = await axios.get(`${API_URL}/profile`, {
         headers: { Authorization: `Bearer ${token}` }
         
       });

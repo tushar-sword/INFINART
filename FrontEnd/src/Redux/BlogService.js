@@ -1,7 +1,7 @@
 // src/redux/slices/blogService.js
 import axios from 'axios';
 
-const API_URL = 'http://localhost:5000';
+const API_URL = import.meta.env.API_URL ;
 
 const getAllBlogs = async () => {
   const response = await axios.get(`${API_URL}/blog`);
