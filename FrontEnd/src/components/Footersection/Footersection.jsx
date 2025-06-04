@@ -11,7 +11,7 @@ import { Link } from 'react-router-dom';
         
         {/* Branding & Social */}
         <div className="footer-section">
-          <h2 className="footer-logo"><Link to="/" onClick={() => window.scrollTo(0, 0)}>Infinart</Link>
+          <h2 className="footer-logo"><Link to="/" onClick={() => window.scrollTo(0, 0)}>Aestheticommerce</Link>
           </h2>
           <p className="footer-desc">
             Curated gifts & timeless decor for every space.
