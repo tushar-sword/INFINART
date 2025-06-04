@@ -1,6 +1,6 @@
 // src/redux/slices/blogSlice.js
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import blogService from './blogService';
+import blogService from './BlogService';
 
 const initialState = {
   blogs: [],
