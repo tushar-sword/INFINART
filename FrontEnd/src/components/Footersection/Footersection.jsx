@@ -61,9 +61,9 @@ import { Link } from 'react-router-dom';
 
         <div className="footer-section">
           <h3>Our Store</h3>
-          <p>Infinart HQ, Noida, India</p>
-          <p>Mon – Sat: 10AM – 8PM</p>
-          <p>Email: support@infinart.in</p>
+          <p>Aestheticommerce HQ, Delhi, India</p>
+          
+          <p>Email: Info@aestheticommerce.com</p>
         </div>
       </div>
 
@@ -71,7 +71,7 @@ import { Link } from 'react-router-dom';
 
       {/* Bottom Bar */}
       <div className="footer-bottom">
-        © 2025 Infinart. All rights reserved. | Made with ❤️ by Team Infinart.
+        © 2025 Aestheticommerce. All rights reserved. | Made with ❤️ by Team Aestheticommerce.
       </div>
     </footer>
   );
