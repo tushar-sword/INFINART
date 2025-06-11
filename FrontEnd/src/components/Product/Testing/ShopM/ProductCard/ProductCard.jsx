@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
 import { Heart, Star } from "lucide-react";
+import RatingStars from "../../../../Product/RatingStars/RatingStars.jsx"
 
 import "./ProductCard.css";
 
@@ -110,7 +111,9 @@ const ProductCard = ({ product }) => {
 
       <div className="product-info">
         <h3 className="title">{product.name}</h3>
-        {renderRating()}
+       <div className="rating">
+        <RatingStars rating = {product.rating}/>
+       </div>
         <div className="price-stock">
           <div className="price">
             <span className="actual">₹{product.price}</span>

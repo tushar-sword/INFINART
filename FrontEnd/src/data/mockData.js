@@ -437,7 +437,7 @@ export const categories = [
 
 export const products = [
   {
-    id: "1",
+    id: 1,
     name: "Quilling Art Starter Kit",
     description:
       "Complete beginner's kit with papers, tools, and guidebook for quilling art",
@@ -459,7 +459,7 @@ export const products = [
     tags: ["paper craft", "beginner friendly", "art kit", "quilling"],
   },
   {
-    id: "2",
+    id: 2,
     name: "Professional Watercolor Set",
     description: "24 premium watercolor pans with natural hair brushes",
     price: 1399,
@@ -478,7 +478,7 @@ export const products = [
     tags: ["painting", "watercolor", "artist grade"],
   },
   {
-    id: "3",
+    id: 3,
     name: "Origami Paper Collection",
     description: "200 sheets of traditional Japanese origami papers",
     price: 599,
@@ -497,7 +497,7 @@ export const products = [
     tags: ["origami", "paper", "craft"],
   },
   {
-    id: "4",
+    id: 4,
     name: "Oil Painting Starter Kit",
     description: "Complete set with canvases, oils, and brushes for beginners",
     price: 787,
@@ -515,7 +515,7 @@ export const products = [
     tags: ["painting", "oil", "starter kit"],
   },
   {
-    id: "5",
+    id: 5,
     name: "Calligraphy Master Set",
     description:
       "Professional calligraphy set with ink, nibs, and practice sheets",
@@ -536,7 +536,7 @@ export const products = [
     tags: ["calligraphy", "writing", "stationery"],
   },
   {
-    id: "6",
+    id: 6,
     name: "Calligraphy Master Set",
     description:
       "Professional calligraphy set with ink, nibs, and practice sheets",
@@ -551,7 +551,7 @@ export const products = [
     tags: ["calligraphy", "writing", "stationery"],
   },
   {
-    id: "7",
+    id: 7,
     name: "Origami Starter Kit",
     description:
       "Create beautiful designs with this comprehensive DIY kit. Perfect for beginners and experienced crafters alike.",
@@ -569,7 +569,7 @@ export const products = [
     tags: ["diy", "paper", "origami", "creative", "craft", "paper crafts"],
   },
   {
-    id: "8",
+    id: 8,
     name: "Embroidery Premium Kit",
     description:
       "Premium craft set with vibrant colors, brushes, and all necessary tools. Ideal for beginners and professionals.",
@@ -584,7 +584,7 @@ export const products = [
     tags: ["painting", "watercolor", "artist grade"],
   },
   {
-    id: "9",
+    id: 9,
     name: "Clay Modelling Artisan Collection",
     description:
       "Complete starter kit with essential tools, materials, and instructional guide. Create beautiful pieces with ease.",
@@ -611,7 +611,7 @@ export const products = [
     ],
   },
   {
-    id: "10",
+    id: 10,
     name: "Wall Décor Mixed Media Kit",
     description:
       "Professional kit with high-quality materials and detailed instructions. Perfect way to start your crafting journey.",
@@ -636,7 +636,7 @@ export const products = [
     ],
   },
   {
-    id: "11",
+    id: 11,
     name: "Calligraphy & Typography DIY Kit",
     description:
       "Advanced set with premium tools and materials. Perfect for creating stunning artistic pieces.",
@@ -656,7 +656,7 @@ export const products = [
     tags: ["calligraphy", "typography", "art", "pen", "ink", "visual arts"],
   },
   {
-    id: "12",
+    id: 12,
     name: "Indian Folk Arts Premium Kit",
     description:
       "Professional kit with high-quality materials and detailed instructions. Perfect way to start your crafting journey.",
@@ -681,7 +681,7 @@ export const products = [
     ],
   },
   {
-    id: "13",
+    id: 13,
     name: "Quilling Art Starter Kit",
     description:
       "Complete beginner's kit with papers, tools, and guidebook for quilling art",
@@ -696,7 +696,7 @@ export const products = [
     tags: ["paper craft", "beginner friendly", "art kit", "quilling"],
   },
   {
-    id: "14",
+    id: 14,
     name: "Professional Watercolor Set",
     description: "24 premium watercolor pans with natural hair brushes",
     price: 1399,
@@ -714,7 +714,7 @@ export const products = [
     tags: ["painting", "watercolor", "artist grade"],
   },
   {
-    id: "15",
+    id: 15,
     name: "Origami Paper Collection",
     description: "200 sheets of traditional Japanese origami papers",
     price: 599,
@@ -728,7 +728,7 @@ export const products = [
     tags: ["origami", "paper", "craft"],
   },
   {
-    id: "16",
+    id: 16,
     name: "Oil Painting Starter Kit",
     description: "Complete set with canvases, oils, and brushes for beginners",
     price: 787,
@@ -742,7 +742,7 @@ export const products = [
     tags: ["painting", "oil", "starter kit"],
   },
   {
-    id: "17",
+    id: 17,
     name: "Calligraphy Master Set",
     description:
       "Professional calligraphy set with ink, nibs, and practice sheets",
@@ -757,7 +757,7 @@ export const products = [
     tags: ["calligraphy", "writing", "stationery"],
   },
   {
-    id: "18",
+    id: 18,
     name: "Calligraphy Master Set",
     description:
       "Professional calligraphy set with ink, nibs, and practice sheets",

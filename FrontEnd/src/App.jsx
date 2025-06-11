@@ -9,7 +9,7 @@ import Blog from '../pages/blogpage';
 import Profile from '../pages/profilepage';
 import Cartpage from '../pages/cartpage';
 import ShopPage from '../pages/shoppage'
-import ProductDetail from './components/Product/Testing/ProductDetails/ProductDetails';
+import ProductDetails from './components/Product/Testing/ProductDetails/ProductDetails';
 
 function App() {
   return (
@@ -23,7 +23,7 @@ function App() {
         <Route path="/blog" element={<Blog />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/cart" element={<Cartpage />} />
-        <Route path="/product/:productId" element={<ProductDetail />} />
+        <Route path="/product/:productId" element={<ProductDetails />} />
         <Route path="/shops" element={<ShopPage/>} />
         {/* Add more routes as needed */}
       

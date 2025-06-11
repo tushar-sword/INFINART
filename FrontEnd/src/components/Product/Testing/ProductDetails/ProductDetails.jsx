@@ -18,7 +18,7 @@ import './ProductDetails.css';
 import { addToCart } from '../../../../Redux/cartSlice';
 import { toggleFavorite } from '../../../../Redux/favoritesSlice';
 
-const ProductDetail = () => {
+const ProductDetails = () => {
   const { productId } = useParams();
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -36,9 +36,9 @@ const ProductDetail = () => {
 
   if (!product) {
     return (
-      <div className="container mx-auto px-4 py-16 text-center">
-        <h2 className="text-2xl font-bold mb-4">Product Not Found</h2>
-        <p className="mb-6">The product you are looking for does not exist.</p>
+      <div className="product-details__not-found">
+        <h2>Product Not Found</h2>
+        <p>The product you are looking for does not exist.</p>
         <Button onClick={() => navigate('/products')}>Return to Shop</Button>
       </div>
     );
@@ -96,188 +96,142 @@ const ProductDetail = () => {
 
     for (let i = 0; i < 5; i++) {
       if (i < fullStars) {
-        stars.push(<Star key={i} className="fill-yellow-400 text-yellow-400" size={18} />);
+        stars.push(<Star key={i} className="star filled" size={18} />);
       } else if (i === fullStars && hasHalfStar) {
         stars.push(
-          <div key={i} className="relative">
-            <Star className="text-gray-300" size={18} />
-            <div className="absolute top-0 left-0 overflow-hidden w-1/2">
-              <Star className="fill-yellow-400 text-yellow-400" size={18} />
+          <div key={i} className="star-container">
+            <Star className="star empty" size={18} />
+            <div className="star-half">
+              <Star className="star filled" size={18} />
             </div>
           </div>
         );
       } else {
-        stars.push(<Star key={i} className="text-gray-300" size={18} />);
+        stars.push(<Star key={i} className="star empty" size={18} />);
       }
     }
 
     return (
-      <div className="flex items-center">
+      <div className="rating">
         {stars}
-        <span className="ml-2 text-gray-600">{rating.toFixed(1)}</span>
+        <span className="rating-value">{rating.toFixed(1)}</span>
       </div>
     );
   };
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      <div className="flex flex-col lg:flex-row gap-8">
+    <div className="product-details__container">
+      <div className="product-details__content">
         {/* Thumbnails */}
-        <div className="lg:w-1/12">
-          <div className="flex flex-row lg:flex-col gap-2 mb-4 lg:mb-0">
-            {product.images.map((image, index) => (
-              <div
-                key={index}
-                className={`aspect-square border-2 rounded cursor-pointer overflow-hidden ${selectedImageIndex === index ? 'border-craft-teal' : 'border-gray-200'}`}
-                onClick={() => setSelectedImageIndex(index)}
-              >
-                <img
-                  src={image}
-                  alt={`${product.name} thumbnail ${index + 1}`}
-                  className="w-full h-full object-cover"
-                />
-              </div>
-            ))}
-          </div>
+        <div className="product-details__thumbnails">
+          {product.images.map((image, index) => (
+            <div
+              key={index}
+              className={`thumbnail ${selectedImageIndex === index ? 'active' : ''}`}
+              onClick={() => setSelectedImageIndex(index)}
+            >
+              <img src={image} alt={`${product.name} thumbnail ${index + 1}`} />
+            </div>
+          ))}
         </div>
 
         {/* Main Image */}
         <div
-          className="lg:w-2/5 relative"
+          className="product-details__main-image"
           onMouseMove={handleImageHover}
           onMouseLeave={handleImageLeave}
           ref={imageRef}
         >
-          <div className="aspect-square rounded overflow-hidden border border-gray-200 cursor-zoom-in relative">
-            <img
-              src={product.images[selectedImageIndex]}
-              alt={product.name}
-              className="w-full h-full object-cover"
-            />
-
+          <div className="main-image-container">
+            <img src={product.images[selectedImageIndex]} alt={product.name} />
             <button
               onClick={handleFavoriteToggle}
-              className={`absolute top-2 right-2 z-20 p-2 rounded-full ${isFavorite ? 'bg-craft-coral text-white' : 'bg-white text-craft-coral'}`}
+              className={`favorite-btn ${isFavorite ? 'active' : ''}`}
             >
               <Heart size={20} fill={isFavorite ? "currentColor" : "none"} />
             </button>
           </div>
 
           {showZoom && (
-            <div className="hidden lg:block lg:absolute lg:top-0 lg:left-full lg:ml-4 lg:w-full lg:aspect-square lg:rounded lg:overflow-hidden lg:border lg:border-gray-200 lg:shadow-lg z-30">
-              <div
-                style={{
-                  backgroundImage: `url(${product.images[selectedImageIndex]})`,
-                  backgroundPosition: `${zoomPosition.x}% ${zoomPosition.y}%`,
-                  backgroundSize: '200%',
-                  backgroundRepeat: 'no-repeat',
-                  width: '100%',
-                  height: '100%'
-                }}
-              />
-            </div>
+            <div
+              className="zoom-image"
+              style={{
+                backgroundImage: `url(${product.images[selectedImageIndex]})`,
+                backgroundPosition: `${zoomPosition.x}% ${zoomPosition.y}%`,
+              }}
+            />
           )}
         </div>
 
         {/* Product Details */}
-        <div className={`lg:w-2/5 ${showZoom ? 'opacity-50 transition-opacity duration-300' : ''}`}>
-          <h1 className="text-xl font-bold text-gray-900 mb-2">{product.name}</h1>
-
-          <div className="mb-4">
-            {renderRating(product.rating)}
-          </div>
-
-          <div className="mb-6">
-            <div className="flex items-center space-x-2">
-              <span className="text-2xl font-bold text-craft-navy">Rs. {product.price.toFixed(2)}</span>
-
-              {product.originalPrice && (
-                <>
-                  <span className="text-gray-400 line-through text-lg">Rs. {product.originalPrice.toFixed(2)}</span>
-                  <span className="text-craft-coral text-lg">-Rs. {discountAmount}</span>
-                </>
-              )}
-            </div>
-
-            {product.discountPercentage && (
-              <div className="mt-1">
-                <span className="bg-craft-coral text-white text-xs font-semibold px-2 py-1 rounded">
-                  {product.discountPercentage}% OFF
-                </span>
-              </div>
+        <div className={`product-details__info ${showZoom ? 'dimmed' : ''}`}>
+          <h1>{product.name}</h1>
+          {renderRating(product.rating)}
+          <div className="price">
+            <span className="current-price">Rs. {product.price.toFixed(2)}</span>
+            {product.originalPrice && (
+              <>
+                <span className="original-price">Rs. {product.originalPrice.toFixed(2)}</span>
+                <span className="discount">-Rs. {discountAmount}</span>
+              </>
             )}
           </div>
 
-          <div className="mb-6">
-            <h3 className="text-lg font-semibold mb-2">Description</h3>
-            <p className="text-gray-700">{product.description}</p>
+          {product.discountPercentage && (
+            <div className="discount-badge">
+              {product.discountPercentage}% OFF
+            </div>
+          )}
+
+          <div className="description">
+            <h3>Description</h3>
+            <p>{product.description}</p>
           </div>
 
-          <div className="mb-6">
-            <span className={`${product.inStock ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'} text-sm font-semibold px-3 py-1 rounded`}>
-              {product.inStock ? 'In Stock' : 'Out of Stock'}
-            </span>
+          <div className={`stock ${product.inStock ? 'in-stock' : 'out-of-stock'}`}>
+            {product.inStock ? 'In Stock' : 'Out of Stock'}
           </div>
 
-          <div className="mb-6">
-            <h3 className="text-lg font-semibold mb-2">Quantity</h3>
-            <div className="flex items-center space-x-2">
-              <button
-                onClick={() => handleQuantityChange(-1)}
-                disabled={quantity <= 1}
-                className="p-2 border rounded-md hover:bg-gray-100 disabled:opacity-50"
-              >
+          <div className="quantity">
+            <h3>Quantity</h3>
+            <div className="quantity-controls">
+              <button onClick={() => handleQuantityChange(-1)} disabled={quantity <= 1}>
                 <Minus size={16} />
               </button>
-              <span className="w-10 text-center">{quantity}</span>
-              <button
-                onClick={() => handleQuantityChange(1)}
-                disabled={quantity >= 10}
-                className="p-2 border rounded-md hover:bg-gray-100 disabled:opacity-50"
-              >
+              <span>{quantity}</span>
+              <button onClick={() => handleQuantityChange(1)} disabled={quantity >= 10}>
                 <Plus size={16} />
               </button>
             </div>
           </div>
 
-          <div className="flex space-x-4 mb-8">
-            <Button
-              onClick={handleAddToCart}
-              disabled={!product.inStock}
-              className="flex-1 bg-craft-teal hover:bg-craft-teal/80 text-white flex items-center justify-center space-x-2 py-4"
-            >
+          <div className="actions">
+            <Button onClick={handleAddToCart} disabled={!product.inStock}>
               <ShoppingCart size={18} />
               <span>Add to Cart</span>
             </Button>
-
-            <Button
-              onClick={handleBuyNow}
-              disabled={!product.inStock}
-              className="flex-1 bg-craft-coral hover:bg-craft-coral/80 text-white flex items-center justify-center space-x-2 py-4"
-            >
+            <Button onClick={handleBuyNow} disabled={!product.inStock}>
               <span>Buy Now</span>
             </Button>
           </div>
 
           {product.tags && (
-            <div className="mb-4">
-              <h3 className="text-sm font-semibold mb-2 text-gray-500">Tags:</h3>
-              <div className="flex flex-wrap gap-2">
+            <div className="tags">
+              <h3>Tags:</h3>
+              <div className="tag-list">
                 {product.tags.map((tag, index) => (
-                  <span key={index} className="bg-gray-100 text-gray-700 text-xs px-2 py-1 rounded">
-                    {tag}
-                  </span>
+                  <span key={index} className="tag">{tag}</span>
                 ))}
               </div>
             </div>
           )}
 
-          <div>
-            <h3 className="text-sm font-semibold mb-2 text-gray-500">Category:</h3>
-            <div className="flex items-center space-x-2">
-              <span className="text-craft-navy">{product.category}</span>
+          <div className="category">
+            <h3>Category:</h3>
+            <div className="category-path">
+              <span>{product.category}</span>
               <span>›</span>
-              <span className="text-craft-navy">{product.subcategory}</span>
+              <span>{product.subcategory}</span>
             </div>
           </div>
         </div>
@@ -293,18 +247,18 @@ const ProductDetail = () => {
             </DialogDescription>
           </DialogHeader>
 
-          <div className="grid gap-4 py-4">
-            <div className="grid grid-cols-4 items-center gap-4">
-              <label htmlFor="name" className="text-right">Full Name</label>
-              <input id="name" className="col-span-3 p-2 border rounded" placeholder="John Doe" />
+          <div className="buy-now-form">
+            <div className="form-group">
+              <label htmlFor="name">Full Name</label>
+              <input id="name" placeholder="John Doe" />
             </div>
-            <div className="grid grid-cols-4 items-center gap-4">
-              <label htmlFor="address" className="text-right">Address</label>
-              <textarea id="address" className="col-span-3 p-2 border rounded" placeholder="123 Main Street" rows={3} />
+            <div className="form-group">
+              <label htmlFor="address">Address</label>
+              <textarea id="address" placeholder="123 Main Street" rows={3} />
             </div>
-            <div className="grid grid-cols-4 items-center gap-4">
-              <label htmlFor="phone" className="text-right">Phone</label>
-              <input id="phone" className="col-span-3 p-2 border rounded" placeholder="+91 1234567890" />
+            <div className="form-group">
+              <label htmlFor="phone">Phone</label>
+              <input id="phone" placeholder="+91 1234567890" />
             </div>
           </div>
 
@@ -328,4 +282,4 @@ const ProductDetail = () => {
   );
 };
 
-export default ProductDetail;
+export default ProductDetails;
