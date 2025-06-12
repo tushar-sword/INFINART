@@ -5,6 +5,9 @@ import { products } from '../../../../data/mockData';
 import { Star, Heart, ShoppingCart, Plus, Minus } from 'lucide-react';
 import { toast } from 'sonner';
 import { Button } from '../../../../ui/Button';
+
+import Navbar from '../../../Navbar/Navbar';
+
 import {
   Dialog,
   DialogContent,
@@ -24,6 +27,7 @@ const ProductDetails = () => {
   const dispatch = useDispatch();
 
   const favorites = useSelector((state) => state.favorites.items);
+  const cart = useSelector((state) => state.cart.cartItems); // Added for debugging or display
   const product = products.find(p => p.id === Number(productId));
 
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
@@ -65,8 +69,14 @@ const ProductDetails = () => {
   };
 
   const handleAddToCart = () => {
-    dispatch(addToCart({ productId: product.id, quantity }));
-    toast.success(`${quantity} x ${product.name} added to cart`);
+    dispatch(addToCart({
+      id: product.id,
+      name: product.name,
+      price: product.price,
+      image: product.images[0],
+      quantity
+    }));
+    toast.success(`${quantity} x ${product.name} added to cart!`);
   };
 
   const handleBuyNow = () => {
@@ -120,6 +130,8 @@ const ProductDetails = () => {
   };
 
   return (
+    <>
+    <Navbar />
     <div className="product-details__container">
       <div className="product-details__content">
         {/* Thumbnails */}
@@ -279,6 +291,7 @@ const ProductDetails = () => {
         </DialogContent>
       </Dialog>
     </div>
+    </>
   );
 };
 

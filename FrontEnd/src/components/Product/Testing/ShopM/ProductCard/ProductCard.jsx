@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from "react";
+import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
-
 import { Heart, Star } from "lucide-react";
-import RatingStars from "../../../../Product/RatingStars/RatingStars.jsx"
-
+import RatingStars from "../../../../Product/RatingStars/RatingStars.jsx";
+import { addToCart } from "../../../../../Redux/cartSlice.js"; // ✅ adjust path if needed
 import "./ProductCard.css";
 
 const ProductCard = ({ product }) => {
+  const dispatch = useDispatch();
   const [isHovering, setIsHovering] = useState(false);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
@@ -20,7 +21,6 @@ const ProductCard = ({ product }) => {
     return () => clearInterval(interval);
   }, [isHovering, product.images.length]);
 
-  // Discount calculation
   const calculateDiscount = (actual, striked) => {
     if (!actual || !striked || striked <= actual) return 0;
     return Math.round(((striked - actual) / striked) * 100);
@@ -28,7 +28,6 @@ const ProductCard = ({ product }) => {
 
   const discount = calculateDiscount(product.price, product.originalPrice);
 
-  // Render rating stars
   const renderRating = () => {
     const fullStars = Math.floor(product.rating);
     const hasHalfStar = product.rating - fullStars >= 0.5;
@@ -36,12 +35,7 @@ const ProductCard = ({ product }) => {
 
     for (let i = 0; i < fullStars; i++) {
       stars.push(
-        <Star
-          key={`full-${i}`}
-          size={11}
-          fill="currentColor"
-          className="star-icon full-star"
-        />
+        <Star key={`full-${i}`} size={11} fill="currentColor" className="star-icon full-star" />
       );
     }
 
@@ -71,6 +65,18 @@ const ProductCard = ({ product }) => {
     );
   };
 
+  const handleAddToCart = (e) => {
+  e.preventDefault();
+  e.stopPropagation();
+
+  dispatch(addToCart({
+    id: product.id,
+    name: product.name,
+    price: product.price,
+    image: product.images[0], // or fallback to a placeholder
+  }));
+};
+
   return (
     <Link
       to={`/product/${product.id}`}
@@ -83,13 +89,11 @@ const ProductCard = ({ product }) => {
     >
       {discount > 0 && <div className="discount-badge">{discount}% OFF</div>}
 
-      {/* Static favorite button – no auth logic */}
       <button
         className={`favorite-btn ${isHovering ? "visible" : "hidden"}`}
         onClick={(e) => {
           e.preventDefault();
           e.stopPropagation();
-          // No favorite handling – just a placeholder effect
           alert("Favorite functionality is disabled in this version.");
         }}
       >
@@ -111,9 +115,9 @@ const ProductCard = ({ product }) => {
 
       <div className="product-info">
         <h3 className="title">{product.name}</h3>
-       <div className="rating">
-        <RatingStars rating = {product.rating}/>
-       </div>
+        <div className="rating">
+          <RatingStars rating={product.rating} />
+        </div>
         <div className="price-stock">
           <div className="price">
             <span className="actual">₹{product.price}</span>
@@ -121,25 +125,14 @@ const ProductCard = ({ product }) => {
               <span className="striked">₹{product.originalPrice}</span>
             )}
           </div>
-          <span
-            className={`stock ${product.inStock ? "in-stock" : "out-of-stock"}`}
-          >
+          <span className={`stock ${product.inStock ? "in-stock" : "out-of-stock"}`}>
             {product.inStock ? "In Stock" : "Out of Stock"}
           </span>
         </div>
       </div>
 
-      {/* Static add to cart button – no auth logic */}
       <div className={`add-to-cart ${isHovering ? "visible" : ""}`}>
-        <button
-          disabled={!product.inStock}
-          onClick={(e) => {
-            e.preventDefault();
-            e.stopPropagation();
-            // No cart handling – just a placeholder effect
-            alert("Add to Cart functionality is disabled in this version.");
-          }}
-        >
+        <button disabled={!product.inStock} onClick={handleAddToCart}>
           <span>Add to Cart</span>
         </button>
       </div>
