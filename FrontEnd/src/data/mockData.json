@@ -1,0 +1,329 @@
+[
+  {
+    "name": "Quilling Art Starter Kit",
+    "description": "Complete beginner's kit with papers, tools, and guidebook for quilling art",
+    "price": 899,
+    "originalPrice": 1299,
+    "discountPercentage": 30,
+    "images": [
+      "https://i.ibb.co/m5ysTf92/Flux-Dev-A-beautifully-arranged-and-colorful-premium-scrapbook-3.jpg",
+      "https://images.pexels.com/photos/1099816/pexels-photo-1099816.jpeg",
+      "https://images.pexels.com/photos/1090638/pexels-photo-1090638.jpeg",
+      "https://images.pexels.com/photos/667838/pexels-photo-667838.jpeg"
+    ],
+    "category": "Paper Crafts",
+    "subcategory": "Quilling",
+    "rating": 4.5,
+    "inStock": true,
+    "tags": ["paper craft", "beginner friendly", "art kit", "quilling"]
+  },
+  {
+    "name": "Professional Watercolor Set",
+    "description": "24 premium watercolor pans with natural hair brushes",
+    "price": 1399,
+    "originalPrice": 1599,
+    "discountPercentage": null,
+    "images": [
+      "https://images.pexels.com/photos/2249959/pexels-photo-2249959.jpeg",
+      "https://i.ibb.co/SDnWK685/Flux-Dev-A-beautifully-arranged-Quilling-Art-Starter-Kit-surro-3.jpg",
+      "https://example.com/image.jpg",
+      "https://example.com/image.jpg"
+    ],
+    "category": "Visual Arts",
+    "subcategory": "Painting",
+    "rating": 4.8,
+    "inStock": true,
+    "tags": ["painting", "watercolor", "artist grade"]
+  },
+  {
+    "name": "Origami Paper Collection",
+    "description": "200 sheets of traditional Japanese origami papers",
+    "price": 599,
+    "originalPrice": 799,
+    "discountPercentage": 25,
+    "images": [
+      "https://ideogram.ai/assets/image/lossless/response/yfpuyrrSSKy8CSSlqV2jOQ",
+      "https://ideogram.ai/assets/image/lossless/response/G1K-idlSSCSgBTCzVwjfIw",
+      "https://images.pexels.com/photos/1090638/pexels-photo-1090638.jpeg",
+      "https://i.ibb.co/VYt0Pysz/Flux-Dev-A-beautifully-arranged-Quilling-Art-Starter-Kit-laid-1.jpg"
+    ],
+    "category": "Paper Crafts",
+    "subcategory": "Origami",
+    "rating": 4.3,
+    "inStock": true,
+    "tags": ["origami", "paper", "craft"]
+  },
+    {
+        "name": "Oil Painting Starter Kit",
+        "description": "Complete set with canvases, oils, and brushes for beginners",
+        "price": 787,
+        "originalPrice": 1049,
+        "discountPercentage": 24,
+        "images": [
+        "https://ideogram.ai/assets/image/lossless/response/BQ35Bo92S9mT_cKv3YPCdQ",
+        "https://cdn.leonardo.ai/users/1d4822bc-4f00-4b69-a656-b9d83079b145/generations/3ac96f3f-daaf-4f29-96d9-b78c3272f39b/segments/2:4:1/ Flux_Dev_A_beautifully_lit_vibrant_and_artistic_product_image__1.jpg",
+        "https://example.com/image.jpg",
+        "https://example.com/image.jpg"
+        ],
+        "category": "Visual Arts",
+        "subcategory": "Painting",
+        "rating": 4.6,
+        "inStock": false,
+        "tags": ["painting", "oil", "starter kit"]
+    },
+    {
+        "name": "Calligraphy Master Set",
+        "description": "Professional calligraphy set with ink, nibs, and practice sheets",
+        "price": 499,
+        "originalPrice": 799,
+        "discountPercentage": null,
+        "images": [
+            "https://ideogram.ai/assets/image/lossless/response/6i3obRvqTjSXKzpJBmYGWw",
+            "https://images.pexels.com/photos/1129413/pexels-photo-1129413.jpeg",
+            "https://example.com/image.jpg",
+            "https://example.com/image.jpg"
+        ],
+        "category": "Visual Arts",
+        "subcategory": "Calligraphy & Typography",
+        "rating": 4.7,
+        "inStock": true,
+        "tags": ["calligraphy", "writing", "stationery"]
+    },
+  {
+    "name": "Calligraphy Master Set",
+    "description": "Professional calligraphy set with ink, nibs, and practice sheets",
+    "price": 499,
+    "originalPrice": 799,
+    "discountPercentage": null,
+    "images": [ "https://ideogram.ai/assets/image/lossless/response/6i3obRvqTjSXKzpJBmYGWw",
+            "https://images.pexels.com/photos/1129413/pexels-photo-1129413.jpeg",
+            "https://example.com/image.jpg",
+            "https://example.com/image.jpg"],
+    "category": "Visual Arts",
+    "subcategory": "Calligraphy & Typography",
+    "rating": 4.7,
+    "inStock": true,
+    "tags": ["calligraphy", "writing", "stationery"]
+  },
+  {
+    "name": "Origami Starter Kit",
+    "description": "Create beautiful designs with this comprehensive DIY kit. Perfect for beginners and experienced crafters alike.",
+    "price": 899,
+    "originalPrice": 1299,
+    "discountPercentage": 30,
+    "images": [
+      "https://i.ibb.co/SDnWK685/Flux-Dev-A-beautifully-arranged-Quilling-Art-Starter-Kit-surro-3.jpg",
+      "https://images.pexels.com/photos/1099816/pexels-photo-1099816.jpeg"
+    ],
+    "category": "Paper Crafts",
+    "subcategory": "Origami",
+    "rating": 4.5,
+    "inStock": true,
+    "tags": ["diy", "paper", "origami", "creative", "craft", "paper crafts"]
+  },
+  {
+    "name": "Embroidery Premium Kit",
+    "description": "Premium craft set with vibrant colors, brushes, and all necessary tools. Ideal for beginners and professionals.",
+    "price": 1399,
+    "originalPrice": 1599,
+    "discountPercentage": null,
+    "images": ["https://ideogram.ai/assets/image/lossless/response/6i3obRvqTjSXKzpJBmYGWw",
+      "https://images.pexels.com/photos/7667668/pexels-photo-7667668.jpeg",
+       "https://example.com/image.jpg",
+            "https://example.com/image.jpg"],
+    "category": "Visual Arts",
+    "subcategory": "Painting",
+    "rating": 4.8,
+    "inStock": true,
+    "tags": ["painting", "watercolor", "artist grade"]
+  },
+  {
+
+    "name": "Clay Modelling Artisan Collection",
+    "description": "Complete starter kit with essential tools, materials, and instructional guide. Create beautiful pieces with ease.",
+    "price": 999,
+    "originalPrice": null,
+    "discountPercentage": null,
+    "images": [
+      "https://ideogram.ai/assets/image/lossless/response/nbnUTo2RQgO7Gh4Q3ELQJw",
+      "https://images.pexels.com/photos/1129413/pexels-photo-1129413.jpeg",
+      "https://images.pexels.com/photos/2249959/pexels-photo-2249959.jpeg"
+    ],
+    "category": "Sculptural & 3D Crafts",
+    "subcategory": "Clay Modelling",
+    "rating": 4.3,
+    "inStock": true,
+    "tags": [
+      "clay",
+      "sculpture",
+      "handmade",
+      "diy",
+      "3d",
+      "sculptural & 3d crafts"
+    ]
+  },
+  {
+    "id": 10,
+    "name": "Wall Décor Mixed Media Kit",
+    "description": "Professional kit with high-quality materials and detailed instructions. Perfect way to start your crafting journey.",
+    "price": 1499,
+    "originalPrice": 1899,
+    "discountPercentage": 21,
+    "images": [
+      "https://images.pexels.com/photos/1571460/pexels-photo-1571460.jpeg",
+      "https://images.pexels.com/photos/1852382/pexels-photo-1852382.jpeg"
+    ],
+    "category": "Decorative Arts & Mixed Media",
+    "subcategory": "Wall Décor",
+    "rating": 4.7,
+    "inStock": false,
+    "tags": [
+      "wall",
+      "decor",
+      "mixed media",
+      "creative",
+      "home",
+      "decorative arts & mixed media"
+    ]
+  },
+  {
+    "id": 11,
+    "name": "Calligraphy & Typography DIY Kit",
+    "description": "Advanced set with premium tools and materials. Perfect for creating stunning artistic pieces.",
+    "price": 899,
+    "originalPrice": 1199,
+    "images": [
+      "https://i.ibb.co/m5ysTf92/Flux-Dev-A-beautifully-arranged-and-colorful-premium-scrapbook-3.jpg",
+      "https://images.pexels.com/photos/1129413/pexels-photo-1129413.jpeg",
+      "https://images.pexels.com/photos/2811087/pexels-photo-2811087.jpeg",
+      "https://images.pexels.com/photos/6634686/pexels-photo-6634686.jpeg"
+    ],
+    "category": "Visual Arts",
+    "subcategory": "Calligraphy & Typography",
+    "rating": 4.4,
+    "inStock": true,
+    "tags": ["calligraphy", "typography", "art", "pen", "ink", "visual arts"]
+  },
+  {
+    "id": 12,
+    "name": "Indian Folk Arts Premium Kit",
+    "description": "Professional kit with high-quality materials and detailed instructions. Perfect way to start your crafting journey.",
+    "price": 1299,
+    "originalPrice": 1699,
+    "discountPercentage": 24,
+    "images": [
+      "https://ideogram.ai/assets/image/lossless/response/6i3obRvqTjSXKzpJBmYGWw",
+      "https://images.pexels.com/photos/7667668/pexels-photo-7667668.jpeg"
+    ],
+    "category": "Traditional & Cultural Crafts",
+    "subcategory": "Indian Folk Arts",
+    "rating": 4.5,
+    "inStock": false,
+    "tags": [
+      "folk art",
+      "indian",
+      "traditional",
+      "culture",
+      "handcrafted",
+      "traditional & cultural crafts"
+    ]
+  },
+  {
+    "id": 13,
+    "name": "Quilling Art Starter Kit",
+    "description": "Complete beginner's kit with papers, tools, and guidebook for quilling art",
+    "price": 899,
+    "originalPrice": 1299,
+    "discountPercentage": 30,
+    "images": [ "https://ideogram.ai/assets/image/lossless/response/6i3obRvqTjSXKzpJBmYGWw",
+      "https://images.pexels.com/photos/7667668/pexels-photo-7667668.jpeg"],
+    "category": "Paper Crafts",
+    "subcategory": "Quilling",
+    "rating": 4.5,
+    "inStock": true,
+    "tags": ["paper craft", "beginner friendly", "art kit", "quilling"]
+  },
+  {
+    "id": 14,
+    "name": "Professional Watercolor Set",
+    "description": "24 premium watercolor pans with natural hair brushes",
+    "price": 1399,
+    "originalPrice": 1599,
+    "discountPercentage": null,
+    "images": [
+      "https://images.pexels.com/photos/1129413/pexels-photo-1129413.jpeg",
+       "https://ideogram.ai/assets/image/lossless/response/6i3obRvqTjSXKzpJBmYGWw",
+      "https://images.pexels.com/photos/7667668/pexels-photo-7667668.jpeg"
+    ],
+    "category": "Visual Arts",
+    "subcategory": "Painting",
+    "rating": 4.8,
+    "inStock": true,
+    "tags": ["painting", "watercolor", "artist grade"]
+  },
+  {
+    "id": 15,
+    "name": "Origami Paper Collection",
+    "description": "200 sheets of traditional Japanese origami papers",
+    "price": 599,
+    "originalPrice": 799,
+    "discountPercentage": 25,
+    "images": [ "https://ideogram.ai/assets/image/lossless/response/6i3obRvqTjSXKzpJBmYGWw",
+      "https://images.pexels.com/photos/7667668/pexels-photo-7667668.jpeg"],
+    "category": "Paper Crafts",
+    "subcategory": "Origami",
+    "rating": 4.3,
+    "inStock": true,
+    "tags": ["origami", "paper", "craft"]
+  },
+  {
+    "id": 16,
+    "name": "Oil Painting Starter Kit",
+    "description": "Complete set with canvases, oils, and brushes for beginners",
+    "price": 787,
+    "originalPrice": 1049,
+    "discountPercentage": 24,
+    "images": ["https://ideogram.ai/assets/image/lossless/response/6i3obRvqTjSXKzpJBmYGWw",
+      "https://images.pexels.com/photos/7667668/pexels-photo-7667668.jpeg"],
+    "category": "Visual Arts",
+    "subcategory": "Painting",
+    "rating": 4.6,
+    "inStock": false,
+    "tags": ["painting", "oil", "starter kit"]
+  },
+  {
+    "id": 17,
+    "name": "Calligraphy Master Set",
+    "description": "Professional calligraphy set with ink, nibs, and practice sheets",
+    "price": 499,
+    "originalPrice": 799,
+    "discountPercentage": null,
+    "images": ["https://ideogram.ai/assets/image/lossless/response/6i3obRvqTjSXKzpJBmYGWw",
+      "https://images.pexels.com/photos/7667668/pexels-photo-7667668.jpeg"],
+    "category": "Visual Arts",
+    "subcategory": "Calligraphy & Typography",
+    "rating": 4.7,
+    "inStock": true,
+    "tags": ["calligraphy", "writing", "stationery"]
+  },
+  {
+    "id": 18,
+    "name": "Calligraphy Master Set",
+    "description": "Professional calligraphy set with ink, nibs, and practice sheets",
+    "price": 499,
+    "originalPrice": 799,
+    "discountPercentage": null,
+    "images": [ "https://ideogram.ai/assets/image/lossless/response/6i3obRvqTjSXKzpJBmYGWw",
+      "https://images.pexels.com/photos/7667668/pexels-photo-7667668.jpeg"],
+    "category": "Visual Arts",
+    "subcategory": "Calligraphy & Typography",
+    "rating": 4.7,
+    "inStock": true,
+    "tags": ["calligraphy", "writing", "stationery"]
+  }
+
+
+
+]
+
+
