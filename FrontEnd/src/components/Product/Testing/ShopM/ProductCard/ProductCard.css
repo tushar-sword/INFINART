@@ -1,5 +1,3 @@
-
-
 .product-card {
   position: relative;
   width: 250px;
@@ -104,7 +102,7 @@
   color: #f5c518;
 }
 
-
+.price-stock {}
 
 .price {
   display: flex;
@@ -188,7 +186,7 @@
 }
 
 /* Media queries - adjust the minmax value to ensure proper card width */
-/* @media (max-width: 1200px) {
+ @media (max-width: 1200px) {
   .product-card-container {
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   }
@@ -214,7 +212,119 @@
   
   .product-card {
     width: 100%;
-    /* max-width: 280px; Ensures cards don't grow beyond 280px on mobile 
+     max-width: 280px; 
+     /* Ensures cards don't grow beyond 280px on mobile  */
   }
 } 
-  */
+  /* ShopM.css with added breadcrumb and title styles */
+
+.shop-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* Breadcrumb container */
+.breadcrumb-container {
+  margin-bottom: 20px;
+}
+
+/* Page title styles */
+.shop-title {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 1.5rem;
+  text-align: center;
+  text-transform: capitalize;
+}
+
+.shop-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.filter-button-container {
+  display: flex;
+}
+
+.filter-button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.filter-icon {
+  margin-right: 5px;
+}
+
+.sort-container {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.results-count {
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.products-container {
+  margin-top: 30px;
+}
+
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 25px;
+}
+
+.no-products {
+  text-align: center;
+  padding: 40px 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+}
+
+.no-products h3 {
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.no-products p {
+  font-size: 1rem;
+  color: #666;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .shop-toolbar {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .sort-container {
+    width: 100%;
+    justify-content: space-between;
+  }
+  
+  .product-grid {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  }
+}
+
+@media (max-width: 480px) {
+  .shop-title {
+    font-size: 1.7rem;
+  }
+  
+  .product-grid {
+    grid-template-columns: 1fr;
+  }
+}

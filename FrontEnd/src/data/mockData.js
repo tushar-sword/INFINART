@@ -772,6 +772,8 @@ export const products = [
     tags: ["calligraphy", "writing", "stationery"],
   },
 
+  
+
   // ... Continue this pattern for remaining 25 products
 ];
 

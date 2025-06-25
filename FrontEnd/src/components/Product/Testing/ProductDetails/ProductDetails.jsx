@@ -1,54 +1,76 @@
-import React, { useState, useRef } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
-import { products } from '../../../../data/mockData';
-import { Star, Heart, ShoppingCart, Plus, Minus } from 'lucide-react';
-import { toast } from 'sonner';
-import { Button } from '../../../../ui/Button';
-
-import Navbar from '../../../Navbar/Navbar';
-
+import React, { useState, useRef, useEffect } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { fetchProducts } from "../../../../Redux/productSlice";
+import { Star, Heart, ShoppingCart, Plus, Minus, ChevronLeft, ChevronRight } from "lucide-react";
+import { toast } from "sonner";
+import { Button } from "../../../../ui/Button";
+import RatingStars from "../../RatingStars/RatingStars.jsx";
+import { motion, AnimatePresence } from "framer-motion";
+import Breadcrumb from "../ShopM/Breadcrumb/Breadcrumb.jsx";
+import Navbar from "../../../Navbar/Navbar";
+import Footersec from "../../../Footersection/Footersection.jsx";
 import {
   Dialog,
   DialogContent,
   DialogDescription,
   DialogHeader,
   DialogTitle,
-  DialogFooter
+  DialogFooter,
 } from "../../../../ui/dialog";
-import './ProductDetails.css';
+import "./ProductDetails.css";
+import { addToCart } from "../../../../Redux/cartSlice";
+import { toggleFavorite } from "../../../../Redux/favoritesSlice";
 
-import { addToCart } from '../../../../Redux/cartSlice';
-import { toggleFavorite } from '../../../../Redux/favoritesSlice';
+export const slugify = (str) =>
+  str.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
 
 const ProductDetails = () => {
-  const { productId } = useParams();
+  const { category, subcategory, productName } = useParams();
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
+  const { products: allProducts, loading } = useSelector((state) => state.products);
   const favorites = useSelector((state) => state.favorites.items);
-  const cart = useSelector((state) => state.cart.cartItems); // Added for debugging or display
-  const product = products.find(p => p.id === Number(productId));
+  const cart = useSelector((state) => state.cart.cartItems);
+
+  useEffect(() => {
+    if (allProducts.length === 0) {
+      dispatch(fetchProducts());
+    }
+  }, [dispatch, allProducts.length]);
+
+  const product = allProducts.find(
+    (p) =>
+      slugify(p.category) === category &&
+      slugify(p.subcategory) === subcategory &&
+      slugify(p.name) === productName
+  );
 
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
   const [quantity, setQuantity] = useState(1);
   const [zoomPosition, setZoomPosition] = useState({ x: 0, y: 0 });
   const [showZoom, setShowZoom] = useState(false);
   const [showBuyNowDialog, setShowBuyNowDialog] = useState(false);
+  const [pincode, setPincode] = useState("");
 
   const imageRef = useRef(null);
 
-  if (!product) {
-    return (
-      <div className="product-details__not-found">
-        <h2>Product Not Found</h2>
-        <p>The product you are looking for does not exist.</p>
-        <Button onClick={() => navigate('/products')}>Return to Shop</Button>
-      </div>
+  const handleNextImage = () => {
+    setSelectedImageIndex((prevIndex) => (prevIndex + 1) % product.images.length);
+  };
+
+  const handlePrevImage = () => {
+    setSelectedImageIndex(
+      (prevIndex) => (prevIndex - 1 + product.images.length) % product.images.length
     );
-  }
+  };
 
   const handleImageHover = (e) => {
+    if (e.target.closest(".carousel-button")) {
+      setShowZoom(false);
+      return;
+    }
     if (!imageRef.current) return;
     const { left, top, width, height } = imageRef.current.getBoundingClientRect();
     const x = ((e.clientX - left) / width) * 100;
@@ -69,13 +91,15 @@ const ProductDetails = () => {
   };
 
   const handleAddToCart = () => {
-    dispatch(addToCart({
-      id: product.id,
-      name: product.name,
-      price: product.price,
-      image: product.images[0],
-      quantity
-    }));
+    dispatch(
+      addToCart({
+        id: product._id || product.id,
+        name: product.name,
+        price: product.price,
+        image: product.images[0],
+        quantity,
+      })
+    );
     toast.success(`${quantity} x ${product.name} added to cart!`);
   };
 
@@ -84,213 +108,289 @@ const ProductDetails = () => {
   };
 
   const handleFavoriteToggle = () => {
-    dispatch(toggleFavorite(product.id));
-    const isFavorite = favorites.includes(product.id);
-    if (isFavorite) {
-      toast.success(`${product.name} removed from favorites`);
-    } else {
-      toast.success(`${product.name} added to favorites`);
-    }
-  };
-
-  const isFavorite = favorites.includes(product.id);
-
-  const discountAmount = product.originalPrice
-    ? (product.originalPrice - product.price).toFixed(2)
-    : '0.00';
-
-  const renderRating = (rating) => {
-    const stars = [];
-    const fullStars = Math.floor(rating);
-    const hasHalfStar = rating - fullStars >= 0.5;
-
-    for (let i = 0; i < 5; i++) {
-      if (i < fullStars) {
-        stars.push(<Star key={i} className="star filled" size={18} />);
-      } else if (i === fullStars && hasHalfStar) {
-        stars.push(
-          <div key={i} className="star-container">
-            <Star className="star empty" size={18} />
-            <div className="star-half">
-              <Star className="star filled" size={18} />
-            </div>
-          </div>
-        );
-      } else {
-        stars.push(<Star key={i} className="star empty" size={18} />);
-      }
-    }
-
-    return (
-      <div className="rating">
-        {stars}
-        <span className="rating-value">{rating.toFixed(1)}</span>
-      </div>
+    dispatch(toggleFavorite(product._id || product.id));
+    const isFavorite = favorites.includes(product.name);
+    toast.success(
+      `${product.name} ${isFavorite ? "removed from" : "added to"} favorites`
     );
   };
 
+  const isFavorite = favorites.includes(product.name);
+
+  const discount =
+    product?.originalPrice && product.price < product.originalPrice
+      ? Math.round(
+          ((product.originalPrice - product.price) / product.originalPrice) * 100
+        )
+      : 0;
+
+  const getBreadcrumbItems = () => {
+    if (!product) return [];
+    const items = [{ label: "Products", href: "/products" }];
+    const categorySlug = slugify(product.category);
+    const subcategorySlug = slugify(product.subcategory);
+
+    if (product.category) {
+      items.push({ label: product.category, href: `/${categorySlug}` });
+    }
+    if (product.subcategory) {
+      items.push({ label: product.subcategory, href: `/${categorySlug}/${subcategorySlug}` });
+    }
+    items.push({ label: product.name, href: "" });
+    return items;
+  };
+
+  if (loading || allProducts.length === 0) {
+    return <div className="loading-message">Loading product...</div>;
+  }
+
+  if (!product) {
+    return (
+      <>
+        <Navbar />
+        <div className="not-found-container">
+          <h2 className="not-found-title">Product Not Found</h2>
+          <p className="not-found-message">
+            The product you are looking for does not exist.
+          </p>
+          <Button className="back-to-shop-btn" onClick={() => navigate("/shop")}>
+            Return to Shop
+          </Button>
+        </div>
+        <Footersec />
+      </>
+    );
+  }
+
   return (
     <>
-    <Navbar />
-    <div className="product-details__container">
-      <div className="product-details__content">
-        {/* Thumbnails */}
-        <div className="product-details__thumbnails">
-          {product.images.map((image, index) => (
-            <div
-              key={index}
-              className={`thumbnail ${selectedImageIndex === index ? 'active' : ''}`}
-              onClick={() => setSelectedImageIndex(index)}
-            >
-              <img src={image} alt={`${product.name} thumbnail ${index + 1}`} />
-            </div>
-          ))}
-        </div>
+      <Navbar />
+      <Breadcrumb items={getBreadcrumbItems()} />
 
-        {/* Main Image */}
-        <div
-          className="product-details__main-image"
-          onMouseMove={handleImageHover}
-          onMouseLeave={handleImageLeave}
-          ref={imageRef}
-        >
-          <div className="main-image-container">
-            <img src={product.images[selectedImageIndex]} alt={product.name} />
-            <button
-              onClick={handleFavoriteToggle}
-              className={`favorite-btn ${isFavorite ? 'active' : ''}`}
-            >
-              <Heart size={20} fill={isFavorite ? "currentColor" : "none"} />
-            </button>
+      <div className="product-detail-container">
+        <div className="product-detail-content">
+          <div className="thumbnail-column">
+            <div className="thumbnail-container">
+              {product.images.map((image, index) => (
+                <div
+                  key={index}
+                  className={`thumbnail-item ${
+                    selectedImageIndex === index
+                      ? "selected-thumbnail"
+                      : "dimmed-thumbnail"
+                  }`}
+                  onClick={() => setSelectedImageIndex(index)}
+                >
+                  <img
+                    src={image}
+                    alt={`${product.name} thumbnail ${index + 1}`}
+                    className="thumbnail-image"
+                  />
+                </div>
+              ))}
+            </div>
           </div>
 
-          {showZoom && (
-            <div
-              className="zoom-image"
-              style={{
-                backgroundImage: `url(${product.images[selectedImageIndex]})`,
-                backgroundPosition: `${zoomPosition.x}% ${zoomPosition.y}%`,
-              }}
-            />
-          )}
-        </div>
+          <div
+            className="main-image-container"
+            onMouseMove={handleImageHover}
+            onMouseLeave={handleImageLeave}
+            ref={imageRef}
+          >
+            {product.images.length > 1 && (
+              <button
+                className="carousel-button left"
+                onClick={handlePrevImage}
+                aria-label="Previous image"
+              >
+                <ChevronLeft size={24} />
+              </button>
+            )}
 
-        {/* Product Details */}
-        <div className={`product-details__info ${showZoom ? 'dimmed' : ''}`}>
-          <h1>{product.name}</h1>
-          {renderRating(product.rating)}
-          <div className="price">
-            <span className="current-price">Rs. {product.price.toFixed(2)}</span>
-            {product.originalPrice && (
-              <>
-                <span className="original-price">Rs. {product.originalPrice.toFixed(2)}</span>
-                <span className="discount">-Rs. {discountAmount}</span>
-              </>
+            <div className="main-image-wrapper">
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={selectedImageIndex}
+                  initial={{ opacity: 0, x: 100 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: -100 }}
+                  transition={{ duration: 0.3 }}
+                  className="image-animation-container"
+                >
+                  <img
+                    src={product.images[selectedImageIndex]}
+                    alt={product.name}
+                    className="main-product-image"
+                  />
+                </motion.div>
+              </AnimatePresence>
+
+              <button
+                onClick={handleFavoriteToggle}
+                className={`favorite-button ${
+                  isFavorite ? "favorite-active" : ""
+                }`}
+                aria-label={
+                  isFavorite ? "Remove from favorites" : "Add to favorites"
+                }
+              >
+                <Heart
+                  size={20}
+                  fill={isFavorite ? "currentColor" : "none"}
+                />
+              </button>
+            </div>
+
+            {product.images.length > 1 && (
+              <button
+                className="carousel-button right"
+                onClick={handleNextImage}
+                aria-label="Next image"
+              >
+                <ChevronRight size={24} />
+              </button>
+            )}
+
+            {showZoom && (
+              <div className="zoom-overlay">
+                <div
+                  className="zoom-content"
+                  style={{
+                    backgroundImage: `url(${product.images[selectedImageIndex]})`,
+                    backgroundPosition: `${zoomPosition.x}% ${zoomPosition.y}%`,
+                  }}
+                />
+              </div>
             )}
           </div>
 
-          {product.discountPercentage && (
-            <div className="discount-badge">
-              {product.discountPercentage}% OFF
+          <div className={`product-details ${showZoom ? "details-dimmed" : ""}`}>
+            <h1 className="product-title">{product.name}</h1>
+
+            <div className="rating-container">
+              <RatingStars rating={product.rating} />
             </div>
-          )}
 
-          <div className="description">
-            <h3>Description</h3>
-            <p>{product.description}</p>
-          </div>
-
-          <div className={`stock ${product.inStock ? 'in-stock' : 'out-of-stock'}`}>
-            {product.inStock ? 'In Stock' : 'Out of Stock'}
-          </div>
-
-          <div className="quantity">
-            <h3>Quantity</h3>
-            <div className="quantity-controls">
-              <button onClick={() => handleQuantityChange(-1)} disabled={quantity <= 1}>
-                <Minus size={16} />
-              </button>
-              <span>{quantity}</span>
-              <button onClick={() => handleQuantityChange(1)} disabled={quantity >= 10}>
-                <Plus size={16} />
-              </button>
-            </div>
-          </div>
-
-          <div className="actions">
-            <Button onClick={handleAddToCart} disabled={!product.inStock}>
-              <ShoppingCart size={18} />
-              <span>Add to Cart</span>
-            </Button>
-            <Button onClick={handleBuyNow} disabled={!product.inStock}>
-              <span>Buy Now</span>
-            </Button>
-          </div>
-
-          {product.tags && (
-            <div className="tags">
-              <h3>Tags:</h3>
-              <div className="tag-list">
-                {product.tags.map((tag, index) => (
-                  <span key={index} className="tag">{tag}</span>
-                ))}
+            <div className="price-container">
+              <div className="price-wrapper">
+                <span className="current-price">₹{product.price}</span>
+                {product.originalPrice && (
+                  <span className="original-price">₹{product.originalPrice}</span>
+                )}
+                {discount > 0 && (
+                  <span className="discount-text">{discount}% off</span>
+                )}
               </div>
             </div>
-          )}
 
-          <div className="category">
-            <h3>Category:</h3>
-            <div className="category-path">
-              <span>{product.category}</span>
-              <span>›</span>
-              <span>{product.subcategory}</span>
+            <div className="description-container">
+              <h3 className="section-title">Description</h3>
+              <p className="product-description">{product.description}</p>
             </div>
+
+            <div className="stock-status">
+              <span
+                className={`stock-badge ${
+                  product.inStock ? "in-stock" : "out-of-stock"
+                }`}
+              >
+                {product.inStock ? "In Stock" : "Out of Stock"}
+              </span>
+            </div>
+
+            <div className="quantity-section">
+              <span className="quantity-label">Quantity:</span>
+              <div className="quantity-selector">
+                <button
+                  onClick={() => handleQuantityChange(-1)}
+                  disabled={quantity <= 1}
+                  className="quantity-btn"
+                >
+                  <Minus size={16} />
+                </button>
+                <span className="quantity-value">{quantity}</span>
+                <button
+                  onClick={() => handleQuantityChange(1)}
+                  disabled={quantity >= 10}
+                  className="quantity-btn"
+                >
+                  <Plus size={16} />
+                </button>
+              </div>
+            </div>
+
+            <div className="pincode-section">
+              <div className="pincode-checker">
+                <input
+                  type="text"
+                  placeholder="Enter pincode"
+                  value={pincode}
+                  onChange={(e) => setPincode(e.target.value)}
+                  className="pincode-input"
+                  maxLength={6}
+                />
+                <button className="check-btn">Check</button>
+              </div>
+            </div>
+
+            <div className="action-buttons">
+              <Button
+                onClick={handleAddToCart}
+                disabled={!product.inStock}
+                className="add-to-cart-btn"
+              >
+                <ShoppingCart size={18} />
+                <span>Add to Cart</span>
+              </Button>
+
+              <Button
+                onClick={handleBuyNow}
+                disabled={!product.inStock}
+                className="buy-now-btn"
+              >
+                <span>Buy Now</span>
+              </Button>
+            </div>
+
+            {product.tags && product.tags.length > 0 && (
+              <div className="tags-container">
+                {product.tags.map((tag) => (
+                  <span key={tag} className="product-tag">
+                    {tag}
+                  </span>
+                ))}
+              </div>
+            )}
           </div>
         </div>
       </div>
 
-      {/* Buy Now Dialog */}
-      <Dialog open={showBuyNowDialog} onOpenChange={setShowBuyNowDialog}>
-        <DialogContent>
-          <DialogHeader>
-            <DialogTitle>Complete Your Purchase</DialogTitle>
-            <DialogDescription>
-              Please provide your shipping details to complete this purchase.
-            </DialogDescription>
-          </DialogHeader>
-
-          <div className="buy-now-form">
-            <div className="form-group">
-              <label htmlFor="name">Full Name</label>
-              <input id="name" placeholder="John Doe" />
-            </div>
-            <div className="form-group">
-              <label htmlFor="address">Address</label>
-              <textarea id="address" placeholder="123 Main Street" rows={3} />
-            </div>
-            <div className="form-group">
-              <label htmlFor="phone">Phone</label>
-              <input id="phone" placeholder="+91 1234567890" />
-            </div>
-          </div>
-
-          <DialogFooter>
-            <Button type="button" variant="outline" onClick={() => setShowBuyNowDialog(false)}>
-              Cancel
-            </Button>
-            <Button
-              type="submit"
-              onClick={() => {
-                toast.success("Order placed successfully!");
-                setShowBuyNowDialog(false);
-              }}
-            >
-              Confirm Order
-            </Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
-    </div>
+      {showBuyNowDialog && (
+        <Dialog open={showBuyNowDialog} onOpenChange={setShowBuyNowDialog}>
+          <DialogContent>
+            <DialogHeader>
+              <DialogTitle>Confirm Purchase</DialogTitle>
+              <DialogDescription>
+                Buy {quantity} × {product.name} for ₹{(product.price * quantity).toFixed(2)}?
+              </DialogDescription>
+            </DialogHeader>
+            <DialogFooter>
+              <Button variant="outline" onClick={() => setShowBuyNowDialog(false)}>
+                Cancel
+              </Button>
+              <Button
+                onClick={() => {
+                  handleAddToCart();
+                  navigate("/checkout");
+                }}
+              >
+                Proceed to Checkout
+              </Button>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
+      )}
+      <Footersec />
     </>
   );
 };

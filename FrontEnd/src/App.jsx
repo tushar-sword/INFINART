@@ -23,7 +23,13 @@ function App() {
         <Route path="/blog" element={<Blog />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/cart" element={<Cartpage />} />
-        <Route path="/product/:productId" element={<ProductDetails />} />
+
+
+        <Route path="/:category" element={<Productpage />} />
+        <Route path="/:category/:subcategory" element={<Productpage />} />
+     <Route path="/:category/:subcategory/:productName" element={<ProductDetails />} />
+
+
         <Route path="/shops" element={<ShopPage/>} />
         {/* Add more routes as needed */}
       

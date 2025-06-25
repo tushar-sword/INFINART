@@ -1,20 +1,28 @@
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import axios from 'axios';
 
-import { createSlice } from '@reduxjs/toolkit';
-import { products as initialProducts } from '../data/mockData'; // Adjust the import path as necessary
+// Get base URL from environment variable
+const API_URL = "http://localhost:5000/products";
 
- 
- const  updatedSortOptions = [
-    { label: 'Relevance', value: 'default', direction: 'asc' },
-    { label: 'Lowest Price', value: 'price', direction: 'asc' },
-    { label: 'Highest Price', value: 'price', direction: 'desc' },
-    { label: 'Top Customer Reviews', value: 'rating', direction: 'desc' },
-    { label: 'Most Recent', value: 'id', direction: 'desc' },
-  ]
+// Async thunk to fetch all products
+export const fetchProducts = createAsyncThunk("products/fetchAll", async () => {
+  const response = await axios.get(API_URL);
+  return response.data;
+});
 
+// Sort options
+const updatedSortOptions = [
+  { label: 'Relevance', value: 'default', direction: 'asc' },
+  { label: 'Lowest Price', value: 'price', direction: 'asc' },
+  { label: 'Highest Price', value: 'price', direction: 'desc' },
+  { label: 'Top Customer Reviews', value: 'rating', direction: 'desc' },
+  { label: 'Most Recent', value: 'id', direction: 'desc' },
+];
 
+// Initial state
 const initialState = {
-  products: initialProducts,
-  filteredProducts: [...initialProducts],
+  products: [],
+  filteredProducts: [],
   sortOption: updatedSortOptions[0],
   filterOptions: {
     inStock: false,
@@ -22,8 +30,9 @@ const initialState = {
     categories: [],
     subcategories: [],
   },
-   updatedSortOptions, 
- 
+  updatedSortOptions,
+  loading: false,
+  error: null,
 };
 
 const productSlice = createSlice({
@@ -38,24 +47,19 @@ const productSlice = createSlice({
     },
     resetFilters(state) {
       state.filterOptions = initialState.filterOptions;
-      state.sortOption = initialState.updatedSortOptions[0];
+      state.sortOption = updatedSortOptions[0];
     },
     filterProducts(state) {
-      // Add your filtering logic here
-
-       const { products, filterOptions, sortOption } = state;
+      const { products, filterOptions, sortOption } = state;
       let filtered = [...products];
 
-      // Filter by stock availability
       if (filterOptions.inStock) {
         filtered = filtered.filter(p => p.inStock === true);
       }
 
-      // Filter by price range
       const [minPrice, maxPrice] = filterOptions.priceRange;
       filtered = filtered.filter(p => p.price >= minPrice && p.price <= maxPrice);
 
-      // Filter by category (case-insensitive)
       if (filterOptions.categories.length > 0) {
         const selected = filterOptions.categories.map(c => c.toLowerCase());
         filtered = filtered.filter(p =>
@@ -63,26 +67,22 @@ const productSlice = createSlice({
         );
       }
 
-      // Filter by subcategory
       if (filterOptions.subcategories.length > 0) {
         filtered = filtered.filter(p =>
           filterOptions.subcategories.includes(p.subcategory)
         );
       }
 
-      // Apply sorting
       if (sortOption?.value !== 'default') {
         const { value, direction } = sortOption;
 
         if (value === 'name') {
-          // Alphabetical sort
           filtered.sort((a, b) =>
             direction === 'asc'
               ? a.name.localeCompare(b.name)
               : b.name.localeCompare(a.name)
           );
         } else {
-          // Numeric sort (price, rating, etc.)
           filtered.sort((a, b) =>
             direction === 'asc'
               ? a[value] - b[value]
@@ -91,10 +91,25 @@ const productSlice = createSlice({
         }
       }
 
-      // Save filtered list to state
       state.filteredProducts = filtered;
-    }
-  }
+    },
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(fetchProducts.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(fetchProducts.fulfilled, (state, action) => {
+        state.loading = false;
+        state.products = action.payload;
+        state.filteredProducts = action.payload; // initial view
+      })
+      .addCase(fetchProducts.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message;
+      });
+  },
 });
 
 export const { setSortOption, setFilterOptions, resetFilters, filterProducts } = productSlice.actions;

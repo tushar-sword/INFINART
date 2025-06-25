@@ -27,43 +27,26 @@ const ProductCard = ({ product }) => {
   };
 
   const discount = calculateDiscount(product.price, product.originalPrice);
+  // Helper function to generate URL slugs
+  
+  const slugify = (str) => str.toLowerCase().replace(/[\s&]+/g, "-");
 
-  const renderRating = () => {
-    const fullStars = Math.floor(product.rating);
-    const hasHalfStar = product.rating - fullStars >= 0.5;
-    const stars = [];
+  const categorySlug = product.category
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, "-")
+        .replace(/^-|-$/g, "");
 
-    for (let i = 0; i < fullStars; i++) {
-      stars.push(
-        <Star key={`full-${i}`} size={11} fill="currentColor" className="star-icon full-star" />
-      );
-    }
+  const subcategorySlug = product.subcategory
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, "-")
+        .replace(/^-|-$/g, "");
 
-    if (hasHalfStar) {
-      stars.push(
-        <span key="half" className="half-star-container">
-          <Star size={11} className="star-icon empty-star" />
-          <Star size={11} fill="currentColor" className="star-icon half-star" />
-        </span>
-      );
-    }
+      const productNameSlug = product.name
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, "-")
+        .replace(/^-|-$/g, "");
 
-    const emptyStars = 5 - stars.length;
-    for (let i = 0; i < emptyStars; i++) {
-      stars.push(
-        <Star key={`empty-${i}`} size={11} className="star-icon empty-star" />
-      );
-    }
-
-    return (
-      <div className="rating">
-        {stars}
-        <span style={{ fontSize: "0.7rem", marginLeft: "5px" }}>
-          ({product.rating.toFixed(1)})
-        </span>
-      </div>
-    );
-  };
+ 
 
   const handleAddToCart = (e) => {
   e.preventDefault();
@@ -79,7 +62,8 @@ const ProductCard = ({ product }) => {
 
   return (
     <Link
-      to={`/product/${product.id}`}
+    
+      to={`/${categorySlug}/${subcategorySlug}/${productNameSlug}`}
       className="product-card"
       onMouseEnter={() => setIsHovering(true)}
       onMouseLeave={() => {

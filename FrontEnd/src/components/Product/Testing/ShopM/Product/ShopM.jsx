@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react"; 
 import { useDispatch, useSelector } from 'react-redux';
+import { fetchProducts } from '../../../../../Redux/productSlice';
+
 import { setSortOption, setFilterOptions, filterProducts } from '../../../../../Redux/productSlice';  // Adjusted import path
 import ProductCard from "../ProductCard/ProductCard";
 import FilterDrawer from "../FilterDrawer/FilterDrawer";
@@ -28,9 +30,12 @@ const Shop = () => {
     { label: 'Most Recent', value: 'id', direction: 'desc' },
   ];
 
-  useEffect(() => {
+ useEffect(() => {
+  // First fetch data from backend, then filter
+  dispatch(fetchProducts()).then(() => {
     dispatch(filterProducts());
-  }, [dispatch]);
+  });
+}, [dispatch]);
 
   const handleSort = (option) => {
     dispatch(setSortOption(option));
@@ -85,7 +90,7 @@ const Shop = () => {
         ) : (
           <div className="product-grid">
             {filteredProducts.map((product) => (
-              <ProductCard key={product.id} product={product} />
+              <ProductCard key={product._id} product={product} />
             ))}
           </div>
         )}
