@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from "react"; 
 import { useDispatch, useSelector } from 'react-redux';
+
+import { useLocation } from 'react-router-dom';
+
 import { fetchProducts } from '../../../../../Redux/productSlice';
 
 import { setSortOption, setFilterOptions, filterProducts } from '../../../../../Redux/productSlice';  // Adjusted import path
@@ -30,12 +33,32 @@ const Shop = () => {
     { label: 'Most Recent', value: 'id', direction: 'desc' },
   ];
 
- useEffect(() => {
-  // First fetch data from backend, then filter
+  // Get the tag from the URL query parameters
+  const location = useLocation();
+const searchParams = new URLSearchParams(location.search);
+const tagFromQuery = searchParams.get('tag');
+
+
+useEffect(() => {
   dispatch(fetchProducts()).then(() => {
+    if (tagFromQuery) {
+      // If URL contains a tag, apply filter
+      dispatch(setFilterOptions({ tags: [tagFromQuery.toLowerCase()] }));
+    } else {
+      // If no tag in URL, reset all filters
+      dispatch(setFilterOptions({ tags: [] }));
+    }
     dispatch(filterProducts());
   });
-}, [dispatch]);
+}, [dispatch, tagFromQuery]);
+
+
+//  useEffect(() => {
+//   // First fetch data from backend, then filter
+//   dispatch(fetchProducts()).then(() => {
+//     dispatch(filterProducts());
+//   });
+// }, [dispatch]);
 
   const handleSort = (option) => {
     dispatch(setSortOption(option));

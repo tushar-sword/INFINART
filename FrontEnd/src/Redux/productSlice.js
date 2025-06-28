@@ -1,16 +1,13 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
-// Get base URL from environment variable
 const API_URL = "http://localhost:5000/products";
 
-// Async thunk to fetch all products
 export const fetchProducts = createAsyncThunk("products/fetchAll", async () => {
   const response = await axios.get(API_URL);
   return response.data;
 });
 
-// Sort options
 const updatedSortOptions = [
   { label: 'Relevance', value: 'default', direction: 'asc' },
   { label: 'Lowest Price', value: 'price', direction: 'asc' },
@@ -19,7 +16,6 @@ const updatedSortOptions = [
   { label: 'Most Recent', value: 'id', direction: 'desc' },
 ];
 
-// Initial state
 const initialState = {
   products: [],
   filteredProducts: [],
@@ -29,6 +25,7 @@ const initialState = {
     priceRange: [0, 2000],
     categories: [],
     subcategories: [],
+    tags: [], // ✅ Added tags array
   },
   updatedSortOptions,
   loading: false,
@@ -73,6 +70,15 @@ const productSlice = createSlice({
         );
       }
 
+      // ✅ Tag-based filtering
+      if (filterOptions.tags && filterOptions.tags.length > 0) {
+        const selectedTags = filterOptions.tags.map(t => t.toLowerCase());
+        filtered = filtered.filter(p =>
+          p.tags.some(tag => selectedTags.includes(tag.toLowerCase()))
+        );
+      }
+
+      // Sorting
       if (sortOption?.value !== 'default') {
         const { value, direction } = sortOption;
 
@@ -103,7 +109,7 @@ const productSlice = createSlice({
       .addCase(fetchProducts.fulfilled, (state, action) => {
         state.loading = false;
         state.products = action.payload;
-        state.filteredProducts = action.payload; // initial view
+        state.filteredProducts = action.payload;
       })
       .addCase(fetchProducts.rejected, (state, action) => {
         state.loading = false;

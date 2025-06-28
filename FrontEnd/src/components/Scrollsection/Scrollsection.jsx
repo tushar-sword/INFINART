@@ -1,11 +1,12 @@
 import React, { useEffect, useRef } from "react";
+import { Link } from "react-router-dom";
 import "./Scrollsection.css";
 
 const ScrollSection = () => {
   const scrollRef = useRef(null);
 
   const items = [
-    { title: "Birthday Gift", img: "https://images.unsplash.com/photo-1513726214296-1f2e95e452d8?q=80&w=2068&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" },
+    { title: "paper craft", img: "https://images.unsplash.com/photo-1513726214296-1f2e95e452d8?q=80&w=2068&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" },
     { title: "Wedding Gift", img: "https://plus.unsplash.com/premium_photo-1661631110461-7baeff9c440f?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" },
     { title: "Anniversary Gift", img: "https://images.pexels.com/photos/3641059/pexels-photo-3641059.jpeg?auto=compress&cs=tinysrgb&w=600" },
     { title: "Baby Shower", img: "https://plus.unsplash.com/premium_photo-1677654190250-e9a946a29a5a?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8YmFieSUyMHNob3dlcnxlbnwwfHwwfHx8MA%3D%3D" },
@@ -19,20 +20,20 @@ const ScrollSection = () => {
 
   useEffect(() => {
     const container = scrollRef.current;
-    const scrollAmount = container.clientWidth; // scroll by 3 cards width
+    const scrollAmount = container.clientWidth;
     let intervalId;
 
     const autoScroll = () => {
       if (container) {
         if (container.scrollLeft + scrollAmount >= container.scrollWidth) {
-          container.scrollTo({ left: 0, behavior: "smooth" });  // from last to start
+          container.scrollTo({ left: 0, behavior: "smooth" });
         } else {
-          container.scrollBy({ left: scrollAmount, behavior: "smooth" }); // move rightwards
+          container.scrollBy({ left: scrollAmount, behavior: "smooth" });
         }
       }
     };
 
-    intervalId = setInterval(autoScroll, 8000); // auto scroll every 8 seconds
+    intervalId = setInterval(autoScroll, 8000);
 
     return () => clearInterval(intervalId);
   }, []);
@@ -45,12 +46,16 @@ const ScrollSection = () => {
 
       <div className="scroll-container" ref={scrollRef}>
         {items.map((item, i) => (
-          <div className="scroll-card" key={i}>
+          <Link
+            key={i}
+            to={`/products?tag=${encodeURIComponent(item.title)}`}
+            className="scroll-card"
+          >
             <div className="scroll-item">
               <img src={item.img} alt={item.title} className="scroll-image" />
             </div>
             <p className="item-text">{item.title}</p>
-          </div>
+          </Link>
         ))}
       </div>
     </div>

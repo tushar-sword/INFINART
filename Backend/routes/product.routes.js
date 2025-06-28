@@ -4,12 +4,27 @@ const Product = require("../models/product.model");
 const router = express.Router();
 
 // GET all products
+// router.get("/", async (req, res) => {
+//   try {
+//     const products = await Product.find();
+//     res.json(products);
+//   } catch (err) {
+//     res.status(500).json({ error: "Failed to fetch products" });
+//   }
+// });
+
 router.get("/", async (req, res) => {
   try {
-    const products = await Product.find();
+    const { tag } = req.query;
+
+    const filter = tag
+      ? { tags: { $in: [tag.toLowerCase()] } }  // Match tag (case-insensitive optional)
+      : {};
+
+    const products = await Product.find(filter);
     res.json(products);
   } catch (err) {
-    res.status(500).json({ error: "Failed to fetch products" });
+    res.status(500).json({ error: "Server error" });
   }
 });
 
