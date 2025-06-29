@@ -18,6 +18,10 @@ app.get('/', (req, res) => {
   res.send('Hello World!');
 });
 
+app.get('/check', (req, res) => {
+  res.send('Hello World!');
+});
+
 app.use('/users', userRoutes); // Use user routes for API
 app.use('/products', productRoutes); // Use product routes for API
 

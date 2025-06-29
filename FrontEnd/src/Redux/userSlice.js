@@ -8,7 +8,7 @@ const API_URL = import.meta.env.VITE_API_URL;
      async (token, thunkAPI) => {
          console.log('Thunk received token:', token); // Add this
         try {
-             const profile = await axios.get(`${API_URL}/profile`, {
+             const profile = await axios.get(`${API_URL}/users/profile`, {
         headers: { Authorization: `Bearer ${token}` }
         
       });

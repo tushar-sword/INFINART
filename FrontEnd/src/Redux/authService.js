@@ -1,5 +1,5 @@
 import axios from 'axios';
-const API_URL = import.meta.env.VITE_API_URL;
+const API_URL = import.meta.env.VITE_API_URL; //http://localhost:5000
 
 // const API_URL = 'http://localhost:5000/users'; // Change if needed
 
@@ -15,7 +15,7 @@ const checkServerStatus = async () => {
 
 // Register function
 const register = async (userData) => {
-  const res = await axios.post(`${API_URL}/register`, userData);
+  const res = await axios.post(`${API_URL}/users/register`, userData);
   const bootTime = Date.now(); // Capture the current boot time
   localStorage.setItem('user', JSON.stringify({ ...res.data, bootTime }));
   return res.data;
@@ -23,7 +23,7 @@ const register = async (userData) => {
 
 // Login function
 const login = async (userData) => {
-  const res = await axios.post(`${API_URL}/login`, userData);
+  const res = await axios.post(`${API_URL}/users/login`, userData);
   const bootTime = Date.now(); // Capture the current boot time
   localStorage.setItem('user', JSON.stringify({ ...res.data, bootTime }));
   return res.data;
