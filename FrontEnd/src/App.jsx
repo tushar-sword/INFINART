@@ -10,12 +10,12 @@ import Profile from '../pages/profilepage';
 import Cartpage from '../pages/cartpage';
 import ShopPage from '../pages/shoppage'
 import ProductDetails from './components/Product/Testing/ProductDetails/ProductDetails';
-import ScrollToTop from './components/ScrolltoTop.jsx'; 
+import ScrollToTop from './components/ScrollToTop.jsx'; 
 
 function App() {
   return (
     <Router>
-       <ScrollToTop />
+       <ScrollToTop/>
       <Routes>
         <Route path="/" element={<Homepage />} />
         <Route path="/products" element={<Productpage />} />
