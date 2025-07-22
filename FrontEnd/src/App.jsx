@@ -9,8 +9,9 @@ import Blog from '../pages/blogpage';
 import Profile from '../pages/profilepage';
 import Cartpage from '../pages/cartpage';
 import ShopPage from '../pages/shoppage'
-import ProductDetails from './components/Product/Testing/ProductDetails/ProductDetails';
+import ProductDetails from "./components/Product/Testing/ProductDetails/ProductDetails.jsx";
 import ScrollToTop from './components/ScrollToTop.jsx'; 
+import SellerHandler from '../src/components/SellerPages/Handler.jsx';
 
 function App() {
   return (
@@ -25,6 +26,9 @@ function App() {
         <Route path="/blog" element={<Blog />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/cart" element={<Cartpage />} />
+        <Route path="/seller" element={<SellerHandler />} />
+        <Route path="/sale" element={<Productpage />} />
+          {/* <Route path="/sale" element={<SalePage />} /> */}
 
 
         <Route path="/:category" element={<Productpage />} />
@@ -41,3 +45,6 @@ function App() {
 }
 
 export default App;
+
+
+

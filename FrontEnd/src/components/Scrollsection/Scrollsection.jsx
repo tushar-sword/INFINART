@@ -6,7 +6,7 @@ const ScrollSection = () => {
   const scrollRef = useRef(null);
 
   const items = [
-    { title: "paper craft", img: "https://images.unsplash.com/photo-1513726214296-1f2e95e452d8?q=80&w=2068&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" },
+    { title: "Paper Craft", img: "https://images.unsplash.com/photo-1513726214296-1f2e95e452d8?q=80&w=2068&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" },
     { title: "Wedding Gift", img: "https://plus.unsplash.com/premium_photo-1661631110461-7baeff9c440f?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" },
     { title: "Anniversary Gift", img: "https://images.pexels.com/photos/3641059/pexels-photo-3641059.jpeg?auto=compress&cs=tinysrgb&w=600" },
     { title: "Baby Shower", img: "https://plus.unsplash.com/premium_photo-1677654190250-e9a946a29a5a?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8YmFieSUyMHNob3dlcnxlbnwwfHwwfHx8MA%3D%3D" },

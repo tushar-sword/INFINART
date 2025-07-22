@@ -3,7 +3,8 @@
 .product-detail-container {
   max-width: 1280px;
   margin: 0 auto;
-  padding: 2rem 1rem;
+  
+  /* padding: 2rem 1rem; */
 }
 
 .product-detail-content {
@@ -22,6 +23,7 @@
   flex-direction: row;
   gap: 0.5rem;
   margin-bottom: 1rem;
+  margin-top: 0;
 }
 
 .thumbnail-item {
@@ -427,7 +429,7 @@
 }
 
 
-.product-grid {
+.product-grid1 {
   display: flex;
   flex-direction: column;
   gap: 2rem;
@@ -634,7 +636,7 @@
 
 .form-row {
   display: grid;
-  grid-template-columns: 1fr 3fr;
+  /* grid-template-columns: 1fr 3fr; */
   gap: 1rem;
 }
 

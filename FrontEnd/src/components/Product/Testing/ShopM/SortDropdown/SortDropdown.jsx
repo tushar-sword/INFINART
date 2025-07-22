@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { ChevronDown } from 'lucide-react';
+import { FaCheck } from "react-icons/fa6";
 import './SortDropdown.css';
 
 const SortDropdown = ({ options, selectedOption, onOptionSelect }) => {
@@ -43,7 +44,7 @@ const SortDropdown = ({ options, selectedOption, onOptionSelect }) => {
               >
                 <span>{option.label}</span>
                 {selectedOption.value === option.value && selectedOption.direction === option.direction && (
-                  <span className="checkmark">✓</span>
+                  <span className="checkmark"><FaCheck /></span>
                 )}
               </li>
             ))}

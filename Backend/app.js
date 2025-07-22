@@ -5,6 +5,7 @@ dotenv.config();
 const cors = require('cors');// Allow cross-origin requests
 const userRoutes = require('./routes/user.routes'); // Import user routes
 const productRoutes = require('./routes/product.routes'); // Import product routes
+const sellerRoutes = require('./routes/seller.routes'); // Import seller routes
 
 const connectDB = require('./db/db'); 
 connectDB(); // Connect to MongoDB
@@ -24,6 +25,7 @@ app.get('/check', (req, res) => {
 
 app.use('/users', userRoutes); // Use user routes for API
 app.use('/products', productRoutes); // Use product routes for API
+app.use('/seller', sellerRoutes); // Use seller routes for API
 
 
 

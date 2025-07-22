@@ -1,5 +1,6 @@
 import Navbar from "../src/components/Navbar/Navbar.jsx";
 import Shop from "../src/components/Product/Testing/ShopM/Product/ShopM.jsx";
+import Footersec from "../src/components/Footersection/Footersection.jsx";
 
 import { Provider } from "react-redux";
 
@@ -13,6 +14,7 @@ function Productpage() {
     <>
     <Navbar/>
     <Shop />
+    <Footersec/>
     </>
   );
 }

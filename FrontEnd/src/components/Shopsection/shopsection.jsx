@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import './shopsection.css';
 
 function Shopsection() {
@@ -17,11 +18,15 @@ function Shopsection() {
       <div className="shop-heading">Shop for Special Occasions →</div>
       <div className="shop-grid">
         {items.map((item, index) => (
-          <div className={`grid-item ${item.class}`} key={index}>
+          <Link
+            key={index}
+            to={`/products?tag=${encodeURIComponent(item.label)}`}
+            className={`grid-item ${item.class}`}
+          >
             <div className="overlay">
               <span className="item-label">{item.label}</span>
             </div>
-          </div>
+          </Link>
         ))}
       </div>
     </div>

@@ -6,7 +6,8 @@
 
 .breadcrumb-container {
   max-width: 1200px;
-  margin: 0 auto;
+  margin: 0 ;
+  margin-left: 5.9rem ; 
   padding: 0 1rem;
 }
 

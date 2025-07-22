@@ -1,8 +1,15 @@
 import React, { useState } from "react";
 import "./searchbar.css";
 import { FiSearch, FiX } from "react-icons/fi";
+import { useNavigate } from "react-router-dom";
 
-const trending = ["Wall Art", "Personalized Gifts", "Home Decor", "Candles", "Photo Frames"];
+const trending = [
+  "Paper Craft",
+  "Wedding Gift",
+  "Baby Shower",
+  "Festive Gift",
+  "Custom Art"
+];
 
 const categories = [
   { label: "All", value: "" },
@@ -11,14 +18,18 @@ const categories = [
   { label: "Art", value: "art" },
 ];
 
-const SearchBar = ({ onSearch }) => {
+const SearchBar = () => {
   const [query, setQuery] = useState("");
   const [category, setCategory] = useState("");
   const [isFocused, setIsFocused] = useState(false);
 
+  const navigate = useNavigate();
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    onSearch(query, category);
+    if (query.trim() !== "") {
+      navigate(`/products?tag=${encodeURIComponent(query)}`);
+    }
   };
 
   const handleClear = () => setQuery("");
@@ -51,13 +62,14 @@ const SearchBar = ({ onSearch }) => {
         )}
         <button type="submit" className="submit-btn">Search</button>
       </form>
+
       <div className="trending-searches">
         <span>Trending: </span>
-        {trending.map((item, idx) => (
+        {trending.map((item) => (
           <button
             key={item}
             className="trending-tag"
-            onClick={() => setQuery(item)}
+            onClick={() => setQuery(item)} // only sets input value now
             tabIndex={0}
           >
             {item}

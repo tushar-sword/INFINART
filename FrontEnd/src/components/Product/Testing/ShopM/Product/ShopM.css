@@ -1,25 +1,27 @@
 /* Main container */
 .shop-container {
   
+  /* max-width: 2000px; */
   max-width: 1370px;
   margin: 0 auto;
-  height: 1850px;
-  /* padding: 1.5rem; */
+  padding-top: 0rem 4rem;
+  padding-bottom: 4rem; /* Add padding to ensure space between shop cards and footer */
+  min-height: 70vh; /* Ensure container takes at least full viewport height */
+  
 }
 
 /* Title */
 .shop-title {
   font-size: 1.875rem;
   font-weight: 700;
-  margin-bottom: 2rem;
-  margin-top: 2rem;
-  text-align: center;
+  margin-top: 0.7rem;
+  text-align:center ;
 }
 
 /* Toolbar */
 .shop-toolbar {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-between; /* Key change */
   align-items: center;
   margin-bottom: 1.5rem;
   margin-top: 2rem;
@@ -32,6 +34,7 @@
 .filter-button-container {
   display: flex;
   align-items: center;
+  margin-left: -2.4rem;
 }
 
 .filter-button {
@@ -61,6 +64,7 @@
   display: flex;
   align-items: center;
   gap: 1rem;
+  margin-right: -2.2rem;
 }
 
 .results-count {
@@ -71,21 +75,9 @@
 /* Products container */
 .products-container {
   margin-top: 2.5rem;
+  width: 100%;
 }
 
-/* Product grid */
-.product-grid { 
-   display: grid;
-  
-   id-template-columns: repeat(auto-fill, minmax(280px, 1fr));  
-   gap: rem;  
-  /* display: flex; */
-
-
-   flex-wrap: wrap;
- justify-content: center; 
-
-} 
 
 
 /* Product grid */
@@ -93,7 +85,17 @@
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
   gap: 1rem;
-  justify-items: center; /* Center the cards in their grid cells */
+  justify-items: start; /* Align cards to left */
+  flex-wrap: wrap;
+  justify-content: center; 
+}
+.product-grid > * {
+  position: relative; /* Ensure scaling doesn't affect layout */
+  transition: transform 0.3s ease; /* Smooth scaling transition */
+}
+
+footer {
+  margin-top: 2rem; /* Ensure footer has space above it */
 }
 
 /* Media queries for specific column counts */
@@ -157,5 +159,102 @@
   
   .sort-container {
     justify-content: space-between;
+  }
+}
+
+
+/* Add to bottom of ShopM.css */
+.results-count {
+  margin-right: 10px;
+  font-size: 14px;
+  color: #555;
+}
+
+.pagination-container {
+  margin: 40px 0;
+}
+
+
+
+
+
+/* Page title styles */
+.shop-title {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 1.5rem;
+  text-align: center;
+  text-transform: capitalize;
+}
+
+
+
+
+.results-count {
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.products-container {
+  margin-top: 30px;
+}
+
+
+
+.no-products {
+  text-align: center;
+  padding: 40px 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+}
+
+.no-products h3 {
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.no-products p {
+  font-size: 1rem;
+  color: #666;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .shop-toolbar {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .sort-container {
+    width: 100%;
+    justify-content: space-between;
+  }
+  
+  .product-grid {
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  }
+}
+
+@media (max-width: 480px) {
+  .shop-title {
+    font-size: 1.7rem;
+  }
+  
+  .product-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.product-grid {
+  
+  gap: 2rem;
+}
+
+@media (min-width: 1024px) {
+  .product-grid {
+    flex-direction: row;
   }
 }

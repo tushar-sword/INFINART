@@ -38,7 +38,7 @@ const sideStyles = {
     left: 0,
     height: "100%",
     width: "75%",
-    maxWidth: "400px",
+    maxWidth: "330px",
     borderRight: "1px solid #ccc",
   },
   right: {
@@ -47,15 +47,15 @@ const sideStyles = {
     right: 0,
     height: "100%",
     width: "75%",
-    maxWidth: "400px",
+    maxWidth: "348px",
     borderLeft: "1px solid #ccc",
   },
 };
 
 const closeButtonStyle = {
   position: "absolute",
-  top: "1rem",
-  right: "1rem",
+  top: "1.01rem",
+  right: "-0.3rem",
   background: "transparent",
   border: "none",
   cursor: "pointer",
@@ -136,7 +136,7 @@ const SheetContent = React.forwardRef(
           {children}
           <SheetPrimitive.Close asChild>
             <button style={closeButtonStyle}>
-              <X width={16} height={16} />
+              <X width={20} height={20} />
               <span style={{ display: "none" }}>Close</span>
             </button>
           </SheetPrimitive.Close>

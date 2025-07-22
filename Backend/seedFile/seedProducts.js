@@ -1,6 +1,5 @@
 const dotenv = require('dotenv');
-dotenv.config();
-
+dotenv.config({ path: '../.env' }); // updated
 const mongoose = require("mongoose");
 const Product = require("../models/product.model");
 const mockData = require("../../FrontEnd/src/data/mockData.json");

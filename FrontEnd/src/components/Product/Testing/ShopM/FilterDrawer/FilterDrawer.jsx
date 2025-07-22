@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   setFilterOptions,
   resetFilters as resetFilterAction,
-  filterProducts, // 
+  filterProducts, //
 } from "../../../../../Redux/productSlice";
 //Redux
 import { categories } from "../../../../../data/mockData";
@@ -30,6 +30,8 @@ import "./FilterDrawer.css";
 const FilterDrawer = ({ open, onClose }) => {
   const dispatch = useDispatch();
   const filterOptions = useSelector((state) => state.products.filterOptions);
+  // NEW: State for showing all categories
+  const [showAllCategories, setShowAllCategories] = useState(false);
 
   // Default values in case filterOptions is undefined
   const defaultPriceRange = [0, 2000];
@@ -48,49 +50,110 @@ const FilterDrawer = ({ open, onClose }) => {
   const [colors, setColors] = useState([]);
   const [itemType, setItemType] = useState("all");
   const [orderingOptions, setOrderingOptions] = useState([]);
+   const [priceRangeMode, setPriceRangeMode] = useState("any"); // NEW: 'any' or 'custom'
 
   // Update local state when filterOptions changes
   useEffect(() => {
     if (filterOptions) {
       setMinPrice(filterOptions.priceRange[0].toString());
       setMaxPrice(filterOptions.priceRange[1].toString());
+      // FIX: Initialize categories from Redux state
+      setSelectedCategories(filterOptions.categories || []);
+      setInStock(filterOptions.inStock || false);
+
+      setPriceRangeMode(
+        filterOptions.priceRange[0] === 0 && filterOptions.priceRange[1] === 2000
+          ? "any"
+          : "custom"
+      );
     }
   }, [filterOptions]);
 
- 
-
-  // Handle category selection
+  // FIXED: Handle category selection properly
   const handleCategoryChange = (category, checked) => {
-    const newCategories = checked
-      ? [...selectedCategories, category]
-      : selectedCategories.filter((c) => c !== category);
+    let newCategories;
+
+    if (checked) {
+      newCategories = [...selectedCategories, category];
+    } else {
+      newCategories = selectedCategories.filter((c) => c !== category);
+    }
 
     setSelectedCategories(newCategories);
+
+    // Update Redux immediately
+    dispatch(
+      setFilterOptions({
+        categories: newCategories,
+        // Clear subcategories when changing categories
+        subcategories: [],
+      })
+    );
+
+    dispatch(filterProducts());
   };
 
-  // Handle price range input change
+ // Change price handlers to update local state only
   const handleMinPriceChange = (e) => {
-    const value = e.target.value;
-    setMinPrice(value);
-    dispatch(
-      setFilterOptions({
-        priceRange: [parseInt(value) || 0, parseInt(maxPrice) || 2000],
-      })
-    );
-    dispatch(filterProducts());
+    setMinPrice(e.target.value);
   };
 
-  // Handle max price input change
   const handleMaxPriceChange = (e) => {
-    const value = e.target.value;
-    setMaxPrice(value);
+    setMaxPrice(e.target.value);
+  };
+
+
+  
+  // Add new function to update price range in Redux
+  const updatePriceRange = () => {
+    const min = parseInt(minPrice) || 0;
+    const max = parseInt(maxPrice) || 2000;
+    
     dispatch(
       setFilterOptions({
-        priceRange: [parseInt(minPrice) || 0, parseInt(value) || 2000],
+        priceRange: [min, max],
       })
     );
     dispatch(filterProducts());
   };
+   const handlePriceModeChange = (mode) => {
+    setPriceRangeMode(mode);
+    
+    if (mode === "any") {
+      setMinPrice("0");
+      setMaxPrice("2000");
+      dispatch(
+        setFilterOptions({
+          priceRange: [0, 2000],
+        })
+      );
+      dispatch(filterProducts());
+    }
+  };
+
+  const applyFilters = () => {
+    if (priceRangeMode === "custom") {
+      const min = parseInt(minPrice) || 0;
+      const max = parseInt(maxPrice) || 2000;
+      const adjustedMin = Math.min(min, max);
+      const adjustedMax = Math.max(min, max);
+
+      setMinPrice(adjustedMin.toString());
+      setMaxPrice(adjustedMax.toString());
+      
+      dispatch(
+        setFilterOptions({
+          priceRange: [adjustedMin, adjustedMax],
+        })
+      );
+    }
+    
+    dispatch(filterProducts());
+    onClose();
+  };
+
+
+
 
   // Handle inStock toggle
   const handleInStockChange = (checked) => {
@@ -129,7 +192,8 @@ const FilterDrawer = ({ open, onClose }) => {
     setColors([]);
     setItemType("all");
     setOrderingOptions([]);
-
+    setSelectedCategories([]);
+    setPriceRangeMode("any"); // Reset to default
     dispatch(resetFilterAction());
     dispatch(filterProducts());
 
@@ -143,11 +207,7 @@ const FilterDrawer = ({ open, onClose }) => {
     }
   };
 
-  // Apply filters and close drawer
-  const applyFilters = () => {
-    dispatch(filterProducts());
-    onClose();
-  };
+ 
 
   return (
     <Sheet open={open} onOpenChange={onClose}>
@@ -156,35 +216,86 @@ const FilterDrawer = ({ open, onClose }) => {
         className={`filter-drawer-content ${open ? "filter-drawer-open" : ""}`}
       >
         <div className="filter-drawer-container">
-          <SheetHeader className="filter-drawer-header">
-            {/* Optional header title here */}
-          </SheetHeader>
+         
 
           <div className="filter-drawer-scrollable-content">
             {/* Filter sections stay the same — example for category shown */}
             <div className="filter-section">
               <h3 className="filter-section-title">Filter by category</h3>
               <div className="filter-options">
-                {categories.slice(0, 3).map((category) => (
-                  <div key={category.id} className="filter-option">
-                    <Checkbox
-                      id={`category-${category.id}`}
-                      checked={selectedCategories.includes(category.name)}
-                      onCheckedChange={(checked) =>
-                        handleCategoryChange(category.name, checked)
-                      }
-                    />
-                    <Label
-                      htmlFor={`category-${category.id}`}
-                      className="filter-option-label"
-                    >
-                      {category.name}
-                    </Label>
-                  </div>
-                ))}
+                {/* Show limited or all categories based on state */}
+                {(showAllCategories ? categories : categories.slice(0, 3)).map(
+                  (category) => (
+                    <div key={category.id} className="filter-option">
+                      <Checkbox
+                        id={`category-${category.id}`}
+                        checked={selectedCategories.includes(category.name)}
+                        onCheckedChange={(checked) =>
+                          handleCategoryChange(category.name, checked)
+                        }
+                      />
+                      <Label htmlFor={`category-${category.id}`}>
+                        {category.name}
+                      </Label>
+                    </div>
+                  )
+                )}
               </div>
-              <button className="show-more-btn">Show more</button>
+              {/* Toggle show more/less */}
+              <button
+                className="show-more-btn"
+                onClick={() => setShowAllCategories(!showAllCategories)}
+              >
+                {showAllCategories ? "Show less" : "Show more"}
+              </button>
             </div>
+
+
+              {/* Price Range Filter */}
+            <div className="filter-section">
+              <h3 className="filter-section-title">Price (₹)</h3>
+              <RadioGroup
+              value={priceRangeMode}
+                onValueChange={handlePriceModeChange}
+                className="radio-group price-radio-group"
+              >
+                <div className="filter-option">
+                  <RadioGroupItem value="any" id="any-price" />
+                  <Label htmlFor="any-price" className="filter-option-label">
+                    Any price
+                  </Label>
+                </div>
+                <div className="filter-option">
+                  <RadioGroupItem value="custom" id="custom-price" />
+                  <Label htmlFor="custom-price" className="filter-option-label">
+                    Custom
+                  </Label>
+                </div>
+              </RadioGroup>
+              <div className="price-range-inputs">
+          <input
+            type="number"
+            id="min-price"
+            placeholder="Low"
+            value={minPrice}
+            onChange={handleMinPriceChange}
+            onBlur={updatePriceRange} // Update on blur
+            className="price-input"
+            min="0"
+          />
+          <span className="price-range-separator">to</span>
+          <input
+            type="number"
+            id="max-price"
+            placeholder="High"
+            value={maxPrice}
+            onChange={handleMaxPriceChange}
+            onBlur={updatePriceRange} // Update on blur
+            className="price-input"
+            min="0"
+          />
+        </div>
+      </div>
 
             {/* Special offers */}
             <div className="filter-section">
@@ -360,46 +471,7 @@ const FilterDrawer = ({ open, onClose }) => {
               </div>
             </div>
 
-            {/* Price Range Filter */}
-            <div className="filter-section">
-              <h3 className="filter-section-title">Price (₹)</h3>
-              <RadioGroup
-                value="custom"
-                className="radio-group price-radio-group"
-              >
-                <div className="filter-option">
-                  <RadioGroupItem value="any" id="any-price" />
-                  <Label htmlFor="any-price" className="filter-option-label">
-                    Any price
-                  </Label>
-                </div>
-                <div className="filter-option">
-                  <RadioGroupItem value="custom" id="custom-price" />
-                  <Label htmlFor="custom-price" className="filter-option-label">
-                    Custom
-                  </Label>
-                </div>
-              </RadioGroup>
-              <div className="price-range-inputs">
-                <input
-                  type="text"
-                  id="min-price"
-                  placeholder="Low"
-                  value={minPrice}
-                  onChange={handleMinPriceChange}
-                  className="price-input"
-                />
-                <span className="price-range-separator">to</span>
-                <input
-                  type="text"
-                  id="max-price"
-                  placeholder="High"
-                  value={maxPrice}
-                  onChange={handleMaxPriceChange}
-                  className="price-input"
-                />
-              </div>
-            </div>
+          
 
             {/* Color */}
             <div className="filter-section">

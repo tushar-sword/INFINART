@@ -52,12 +52,40 @@ const productSchema = new mongoose.Schema({
     type: [String],
   },
 
+  // ✅ Added seller-related fields
+  sellerName: {
+    type: String,
+    default: null,
+  },
+
+  occupation: {
+    type: String,
+    default: null,
+  },
+
+  storeName: {
+    type: String,
+    default: null,
+  },
+
+  sellerId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
+    default: null,
+  },
+
+  // // ✅ Added status field for approval system
+  // status: {
+  //   type: String,
+  //   enum: ["pending", "approved", "rejected"],
+  //   default: "pending",
+  // },
+
   createdAt: {
     type: Date,
     default: Date.now,
   },
 });
-
 
 function arrayLimit(val) {
   return val.length <= 5;

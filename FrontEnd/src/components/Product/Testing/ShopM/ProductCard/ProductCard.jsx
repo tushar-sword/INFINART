@@ -71,7 +71,7 @@ const ProductCard = ({ product }) => {
         setCurrentImageIndex(0);
       }}
     >
-      {discount > 0 && <div className="discount-badge">{discount}% OFF</div>}
+      {discount > 0 && <div className="discount-badge1">{discount}% OFF</div>}
 
       <button
         className={`favorite-btn ${isHovering ? "visible" : "hidden"}`}

@@ -42,7 +42,11 @@
   transition: transform 0.2s ease;
   overflow: hidden;
 }
-
+.grid-item {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+}
 .grid-item:hover {
   transform: scale(1.02);
 }

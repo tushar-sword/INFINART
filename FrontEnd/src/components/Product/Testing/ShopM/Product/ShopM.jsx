@@ -1,30 +1,74 @@
 import React, { useState, useEffect } from "react"; 
 import { useDispatch, useSelector } from 'react-redux';
+import { useLocation, useParams } from 'react-router-dom';
 
-import { useLocation } from 'react-router-dom';
+import { 
+  fetchProducts, 
+  setSortOption, 
+  setFilterOptions, 
+  filterProducts,
+  setCurrentPage,
+  resetFilters
+} from '../../../../../Redux/productSlice';
 
-import { fetchProducts } from '../../../../../Redux/productSlice';
-
-import { setSortOption, setFilterOptions, filterProducts } from '../../../../../Redux/productSlice';  // Adjusted import path
 import ProductCard from "../ProductCard/ProductCard";
 import FilterDrawer from "../FilterDrawer/FilterDrawer";
 import SortDropdown from "../SortDropdown/SortDropdown";
 import { SlidersHorizontal } from "lucide-react";
 import { Button } from "../../../../../ui/Button";
+import Pagination from "../Pagination/Pagination";
 import "./ShopM.css";
+
+const ITEMS_PER_PAGE = 15;
 
 const Shop = () => {
   const dispatch = useDispatch();
+  const { category, subcategory } = useParams();
+
   const { 
     filteredProducts, 
     sortOption, 
-    filterOptions 
+    filterOptions,
+    currentPage
   } = useSelector(state => state.products);
 
   const productCount = filteredProducts ? filteredProducts.length : 0;
   const [showFilterDrawer, setShowFilterDrawer] = useState(false);
+  const totalPages = Math.ceil(productCount / ITEMS_PER_PAGE);
 
-  // Sort options defined locally as per Redux slice
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+  const tagFromQuery = searchParams.get('tag');
+  const sale = searchParams.get('sale');
+  const storeFromQuery = searchParams.get('store');
+
+  const getPageTitle = () => {
+    if (sale === "true") return "Sale Products";
+    if (tagFromQuery) {
+      const formattedTag = tagFromQuery
+        .split('-')
+        .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+        .join(' ');
+      return `${formattedTag}`;
+    }
+    if (storeFromQuery) {
+      return `${storeFromQuery}'s Store`;
+    }
+    if (subcategory) {
+      return `${subcategory
+        .split("-")
+        .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+        .join(" ")}`;
+    }
+    if (category) {
+      return `${category
+        .split("-")
+        .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+        .join(" ")}`;
+    }
+    return "All Products";
+  };
+
   const sortOptions = [
     { label: 'Relevance', value: 'default', direction: 'asc' },
     { label: 'Lowest Price', value: 'price', direction: 'asc' },
@@ -33,46 +77,60 @@ const Shop = () => {
     { label: 'Most Recent', value: 'id', direction: 'desc' },
   ];
 
-  // Get the tag from the URL query parameters
-  const location = useLocation();
-const searchParams = new URLSearchParams(location.search);
-const tagFromQuery = searchParams.get('tag');
+  useEffect(() => {
+    dispatch(resetFilters());
+    dispatch(fetchProducts()).then(() => {
+      const newFilters = { tags: [] };
 
+      if (sale === "true") {
+        newFilters.minDiscount = 40;
+      }
 
-useEffect(() => {
-  dispatch(fetchProducts()).then(() => {
-    if (tagFromQuery) {
-      // If URL contains a tag, apply filter
-      dispatch(setFilterOptions({ tags: [tagFromQuery.toLowerCase()] }));
-    } else {
-      // If no tag in URL, reset all filters
-      dispatch(setFilterOptions({ tags: [] }));
-    }
-    dispatch(filterProducts());
-  });
-}, [dispatch, tagFromQuery]);
+      if (tagFromQuery) {
+        newFilters.tags = [tagFromQuery.toLowerCase()];
+      }
 
+      if (storeFromQuery) {
+        newFilters.storeName = storeFromQuery;
+      }
 
-//  useEffect(() => {
-//   // First fetch data from backend, then filter
-//   dispatch(fetchProducts()).then(() => {
-//     dispatch(filterProducts());
-//   });
-// }, [dispatch]);
+      if (category) {
+        newFilters.categoryFilter = category.replace(/-/g, " ");
+      } else {
+        newFilters.categoryFilter = "";
+      }
 
+      if (subcategory) {
+        newFilters.subcategoryFilter = subcategory.replace(/-/g, " ");
+      } else {
+        newFilters.subcategoryFilter = "";
+      }
+
+      dispatch(setFilterOptions(newFilters));
+      dispatch(filterProducts());
+      dispatch(setCurrentPage(1));
+    });
+  }, [dispatch, tagFromQuery, category, subcategory, sale, storeFromQuery]);
+  
   const handleSort = (option) => {
     dispatch(setSortOption(option));
     dispatch(filterProducts());
+    dispatch(setCurrentPage(1));
   };
 
   const handleFilterChange = (newFilters) => {
     dispatch(setFilterOptions(newFilters));
     dispatch(filterProducts());
+    dispatch(setCurrentPage(1));
   };
+
+  const indexOfLastItem = currentPage * ITEMS_PER_PAGE;
+  const indexOfFirstItem = indexOfLastItem - ITEMS_PER_PAGE;
+  const currentProducts = filteredProducts?.slice(indexOfFirstItem, indexOfLastItem) || [];
 
   return (
     <div className="shop-container">
-      <h1 className="shop-title">Our Craft Kits</h1>
+      <h1 className="shop-title">{getPageTitle()}</h1>
 
       <div className="shop-toolbar">
         <div className="filter-button-container">
@@ -88,7 +146,6 @@ useEffect(() => {
 
         <div className="sort-container">
           <span className="results-count">{productCount} results</span>
-
           <SortDropdown
             options={sortOptions}
             selectedOption={sortOption || sortOptions[0]}
@@ -105,19 +162,27 @@ useEffect(() => {
       />
 
       <div className="products-container">
-        {!filteredProducts || filteredProducts.length === 0 ? (
+        {currentProducts.length === 0 ? (
           <div className="no-products">
             <h3>No products match your filters</h3>
             <p>Try adjusting your filters or search terms.</p>
           </div>
         ) : (
           <div className="product-grid">
-            {filteredProducts.map((product) => (
+            {currentProducts.map((product) => (
               <ProductCard key={product._id} product={product} />
             ))}
           </div>
         )}
       </div>
+
+      {totalPages > 1 && (
+        <Pagination
+          currentPage={currentPage}
+          totalPages={totalPages}
+          onPageChange={(page) => dispatch(setCurrentPage(page))}
+        />
+      )}
     </div>
   );
 };
