@@ -18,3 +18,5 @@ yarn-debug.log*
 .vscode/
 .idea/
 node_modules
+
+cloudinary.js
