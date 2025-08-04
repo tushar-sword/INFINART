@@ -1,4 +1,5 @@
 const userModel = require('../models/user.model');
+const Blog = require('../models/blog.model');
 const userService = require('../services/user.services');
 const { validationResult } = require('express-validator');
 
@@ -102,10 +103,20 @@ module.exports.createBlog = async (req, res) => {
 };
 
 //handle Get all blogs
-module.exports.getBlogs = async (req, res) => {
-  const blogs = await userService.getAllBlogs();
-  res.status(200).json({ blogs });
+// Fix this:
+exports.getBlogs = async (req, res) => {
+  console.log("GET /users/blogs hit ✅");
+
+  try {
+    const blogs = await Blog.find();
+    console.log("Blogs fetched:", blogs);
+    res.status(200).json({ blogs }); // ✅ Wrap in object!
+  } catch (error) {
+    console.error("Error while fetching blogs ❌:", error);
+    res.status(500).json({ message: error.message });
+  }
 };
+
 
 //handle Get blog by id
 module.exports.getBlog = async (req, res) => {

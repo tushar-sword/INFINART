@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './Blogsection.css';
+const API_URL = import.meta.env.API_URL ;
 
 const BlogSection = () => {
   const [feedbacks, setFeedbacks] = useState([]);
@@ -8,7 +9,7 @@ const BlogSection = () => {
   useEffect(() => {
   const fetchBlogs = async () => {
     try {
-      const response = await fetch('http://localhost:5000/api/blogs');
+      const response = await fetch('${API_URL}/blogs'); // Ensure this URL is correct
       if (response.ok) {
         const data = await response.json();
         setFeedbacks(data); // consider renaming 'feedbacks' to 'blogs'

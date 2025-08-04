@@ -77,9 +77,9 @@ router.post(
 );
 
 // Get all blogs
-router.get("/getblogs", userController.getBlogs);
+router.get("/blogs", userController.getBlogs);
 
 // Get blog by ID
-router.get("/blog/:id", userController.getBlog);
+router.get("/blogs/:id", userController.getBlog);
 
 module.exports = router;

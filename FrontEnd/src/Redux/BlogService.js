@@ -1,15 +1,15 @@
 // src/redux/slices/blogService.js
 import axios from 'axios';
 
-const API_URL = import.meta.env.API_URL ;
+const API_URL = import.meta.env.VITE_API_URL; 
 
 const getAllBlogs = async () => {
-  const response = await axios.get(`${API_URL}/blog`);
-  return response.data.blogs;
+  const response = await axios.get(`${API_URL}/users/blogs`);
+  return response.data.blogs; // <-- just return the array
 };
 
 const getSingleBlog = async (id) => {
-  const response = await axios.get(`${API_URL}/blog/${id}`);
+  const response = await axios.get(`${API_URL}/blogs/${id}`);
   return response.data.blog;
 };
 

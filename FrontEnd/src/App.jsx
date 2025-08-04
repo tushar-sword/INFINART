@@ -12,6 +12,7 @@ import ShopPage from '../pages/shoppage'
 import ProductDetails from "./components/Product/Testing/ProductDetails/ProductDetails.jsx";
 import ScrollToTop from './components/ScrollToTop.jsx'; 
 import SellerHandler from '../src/components/SellerPages/Handler.jsx';
+import BlogDetails from './components/Blog/BlogDetails/BlogDetails.jsx';
 
 function App() {
   return (
@@ -29,6 +30,9 @@ function App() {
         <Route path="/seller" element={<SellerHandler />} />
         <Route path="/sale" element={<Productpage />} />
           {/* <Route path="/sale" element={<SalePage />} /> */}
+
+          <Route path="/blogs/:id" element={<BlogDetails />} />
+
 
 
         <Route path="/:category" element={<Productpage />} />

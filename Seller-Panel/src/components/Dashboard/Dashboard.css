@@ -1,0 +1,104 @@
+body, .dashboard-background {
+  font-family: 'Poppins', Arial, sans-serif;
+  background: #fafbfc;
+  margin: 0;
+}
+
+.dashboard-overview-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 12px 0 12px;
+}
+
+h2 {
+  font-family: 'Poppins', Arial, sans-serif;
+  font-size: 1.4em;
+  font-weight: 700;
+  margin-bottom: 6px;
+  color: #23272d;
+  letter-spacing: 0.5px;
+}
+
+.dashboard-overview-desc {
+  color: #636b7b;
+  font-size: 1em;
+  margin-bottom: 32px;
+  font-weight: 400;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+.dashboard-cards-row {
+  display: flex;
+  gap: 28px;
+  flex-wrap: nowrap; /* change from wrap */
+  justify-content: flex-start;
+}
+
+
+.dashboard-card-box {
+  position: relative; /* needed for absolute child positioning */
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 6px 32px rgba(44, 62, 80, 0.13);
+  min-width: 370px;
+  max-width: 370px;
+  flex: 1 1 30px;
+  padding: 28px 24px 22px 26px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  border: 1.5px solid #ebecf0;
+  transition: box-shadow 0.25s, border-color 0.25s;
+}
+
+.dashboard-card-box:hover {
+  box-shadow: 0 12px 40px rgba(44, 62, 80, 0.18);
+  border-color: #d2d8df;
+}
+
+.dashboard-card-icon {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  font-size: 24px;
+  color: #20BFA5; /* example: green color */
+  opacity: 0.7;
+}
+
+.dashboard-card-label {
+  font-family: 'Poppins', Arial, sans-serif;
+  font-size: 1.06em;
+  color: #343b50;
+  margin-bottom: 13px;
+  font-weight: 500;
+  letter-spacing: 0.15px;
+}
+
+.dashboard-card-value {
+  font-family: 'Poppins', Arial, sans-serif;
+  font-size: 1.75em;
+  font-weight: 700;
+  color: #22283d;
+  margin-bottom: 10px;
+  letter-spacing: -1px;
+}
+
+.dashboard-card-trend {
+  font-size: 1em;
+  margin-top: 8px;
+}
+
+.dashboard-card-trend-up {
+  color: #20BFA5;
+  font-weight: 600;
+}
+
+.dashboard-card-trend-desc {
+  color: #8d98af;
+  margin-left: 5px;
+  font-weight: 400;
+}
