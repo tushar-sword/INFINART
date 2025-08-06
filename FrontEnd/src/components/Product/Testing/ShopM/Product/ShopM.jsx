@@ -145,7 +145,7 @@ const Shop = () => {
         </div>
 
         <div className="sort-container">
-          <span className="results-count">{productCount} results</span>
+        <span className="results-count">Showing 1-{Math.min(15, productCount)} of {productCount} products</span>
           <SortDropdown
             options={sortOptions}
             selectedOption={sortOption || sortOptions[0]}

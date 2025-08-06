@@ -1,8 +1,10 @@
 import { useSelector, useDispatch } from "react-redux";
 import { removeFromCart, decreaseQuantity, addToCart, clearCart } from "../../Redux/cartSlice";
 import './Cart.css';
+import { useNavigate } from "react-router-dom";
 
 const CartPage = () => {
+  const navigate = useNavigate();
   const { cartItems, totalAmount } = useSelector(state => state.cart);
   const dispatch = useDispatch();
 
@@ -37,6 +39,7 @@ const CartPage = () => {
     <div className="cart-summary-title">Summary</div>
     <div className="cart-total">Total: ₹{totalAmount}</div>
     <button className="clear-cart-btn" onClick={() => dispatch(clearCart())}>Clear Cart</button>
+    <button className="place-order-btn" onClick={() => navigate("/profile/addresses")}>Place Order</button>
   </div>
 </div>
 

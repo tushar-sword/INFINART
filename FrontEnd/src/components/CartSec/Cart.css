@@ -162,6 +162,22 @@ body {
   transition: background-color 0.3s ease, box-shadow 0.3s ease;
   width: 100%;
   box-shadow: 0 4px 14px rgba(0, 188, 212, 0.4);
+  margin: 3px;
+}
+
+
+.place-order-btn {
+  background-color: #20BFA5;
+  border: none;
+  color: #fff;
+  font-weight: 700;
+  font-size: 1.15rem;
+  padding: 14px 0;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  width: 100%;
+  box-shadow: 0 4px 14px rgba(32, 191, 165, 0.4);
 }
 
 .clear-cart-btn:hover {

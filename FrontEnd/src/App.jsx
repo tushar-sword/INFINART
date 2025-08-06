@@ -13,6 +13,8 @@ import ProductDetails from "./components/Product/Testing/ProductDetails/ProductD
 import ScrollToTop from './components/ScrollToTop.jsx'; 
 import SellerHandler from '../src/components/SellerPages/Handler.jsx';
 import BlogDetails from './components/Blog/BlogDetails/BlogDetails.jsx';
+import ShopDetails from './components/ShopDetails/ShopDetails.jsx';
+import Address from './components/Address/Address.jsx';
 
 function App() {
   return (
@@ -29,6 +31,7 @@ function App() {
         <Route path="/cart" element={<Cartpage />} />
         <Route path="/seller" element={<SellerHandler />} />
         <Route path="/sale" element={<Productpage />} />
+        <Route path="/profile/addresses" element={<Address />} />
           {/* <Route path="/sale" element={<SalePage />} /> */}
 
           <Route path="/blogs/:id" element={<BlogDetails />} />
@@ -41,6 +44,7 @@ function App() {
 
 
         <Route path="/shops" element={<ShopPage/>} />
+        <Route path="/shop-products" element={<ShopDetails/>} />
         {/* Add more routes as needed */}
       
       </Routes>

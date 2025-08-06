@@ -2,10 +2,12 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import "./Navbar.css";
 import { useSelector } from "react-redux";
-import { AiFillHeart } from "react-icons/ai";
-// import { FiShoppingCart, FiChevronDown } from "react-icons/fi";
-import { FiShoppingCart } from "react-icons/fi";
-import { CgProfile } from "react-icons/cg";
+// import { AiFillHeart } from "react-icons/ai";
+// // import { FiShoppingCart, FiChevronDown } from "react-icons/fi";
+// import { FiShoppingCart } from "react-icons/fi";
+// import { CgProfile } from "react-icons/cg";
+import { Heart, ShoppingCart, User, Menu, X } from "lucide-react";
+import { IoBagOutline } from "react-icons/io5";
 
 const shopMegaMenu = [
   {
@@ -76,6 +78,9 @@ const blogMegaMenu = [
 
 const Navbar = () => {
   const { user } = useSelector((state) => state.user);
+  // Get cart and favorites count from Redux
+  const cartCount = useSelector((state) => state.cart.totalQuantity);
+  const favoritesCount = useSelector((state) => state.favorites.items.length);
   const [activeDropdown, setActiveDropdown] = useState(null);
 
   // Helper function to generate URL slugs
@@ -273,13 +278,15 @@ const Navbar = () => {
       {user ? (
         <div className="navbar-icons">
           <Link to="/favorites" className="nav-icon" aria-label="Favorites">
-            <AiFillHeart />
+            <Heart />
+            {favoritesCount > 0 && <span className="badge">{favoritesCount}</span>}
           </Link>
           <Link to="/cart" className="nav-icon" aria-label="Cart">
-            <FiShoppingCart />
+            <ShoppingCart />
+            {cartCount > 0 && <span className="badge">{cartCount}</span>}
           </Link>
           <Link to="/profile" className="nav-icon" aria-label="Profile">
-            <CgProfile />
+            <User />
           </Link>
         </div>
       ) : (

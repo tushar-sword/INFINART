@@ -84,17 +84,41 @@ body {
   align-items: center;
   justify-content: center;
   padding: 7px;
-  border-radius: 50%;
-  transition: box-shadow 0.22s, background 0.22s, color 0.22s, transform 0.22s;
+  border-radius: 70%;
+  /* transition: box-shadow 0.22s, background 0.22s, color 0.22s, transform 0.22s; */
+  position: relative;
+  display: inline-block;
 }
 
 .nav-icon:hover,
 .nav-icon:focus {
-  background: #f2f2f2;
-  color: #20BFA5;
-  box-shadow: 0 2px 8px rgba(32, 191, 165, 0.10);
-  transform: scale(1.13);
+  /* background: #f2f2f2; */
+  /* color: #20BFA5; */
+  /* box-shadow: 0 2px 2px rgba(32, 191, 165, 0.10); */
+  transform: scale(1.1);
   outline: none;
+}
+
+/* Badge for cart and favorites icons */
+.badge {
+  position: absolute;
+  top: 0.4rem;
+  right: -1px;
+  background: #ff3b30;
+  color: white;
+  border-radius: 50%;
+  /* padding: 2px 4px; */
+  font-size: 12px;
+  font-weight: bold;
+  z-index: 1;
+  /* min-width: 10px; */
+  /* text-align: center; */
+  line-height: 1.2;
+  width: 18px;
+  height: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 /* ----------------- DROPDOWN ----------------- */

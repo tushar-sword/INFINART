@@ -1,59 +1,125 @@
 // src/components/ShopPage/ShopPage.jsx
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { fetchProducts } from '../../Redux/productSlice';
 import './ShopCom.css';
+import RatingStars from '../Product/RatingStars/RatingStars';
 
-const shops = {
-  bestSelling: [
-    {
-      name: 'Trendy Store',
-      img: 'https://images.pexels.com/photos/1036857/pexels-photo-1036857.jpeg?auto=compress&cs=tinysrgb&w=200'
-    },
-    {
-      name: 'Urban Deals',
-      img: 'https://images.pexels.com/photos/209817/pexels-photo-209817.jpeg?auto=compress&cs=tinysrgb&w=200'
-    },
-    {
-      name: 'Style Hub',
-      img: 'https://images.pexels.com/photos/298863/pexels-photo-298863.jpeg?auto=compress&cs=tinysrgb&w=200'
+// Function to extract unique stores from product data
+const extractStoresFromProducts = (products) => {
+  const storeMap = new Map();
+
+  products.forEach(product => {
+    if (product.storeName && product.sellerName) {
+      if (!storeMap.has(product.storeName)) {
+        storeMap.set(product.storeName, {
+          name: product.storeName,
+          sellerName: product.sellerName,
+          products: [],
+          totalProducts: 0,
+          averageRating: 0,
+          totalRating: 0,
+          ratingCount: 0
+        });
+      }
+      
+      const store = storeMap.get(product.storeName);
+      store.products.push(product);
+      store.totalProducts += 1;
+      
+      if (product.rating) {
+        store.totalRating += product.rating;
+        store.ratingCount += 1;
+      }
     }
-  ],
-  delhi: [
-    {
-      name: 'Delhi Mart',
-      img: 'https://images.pexels.com/photos/3735644/pexels-photo-3735644.jpeg?auto=compress&cs=tinysrgb&w=200'
-    },
-    {
-      name: 'Capital Threads',
-      img: 'https://images.pexels.com/photos/1666067/pexels-photo-1666067.jpeg?auto=compress&cs=tinysrgb&w=200'
-    },
-    {
-      name: 'Red Fort Bazaar',
-      img: 'https://images.pexels.com/photos/2698519/pexels-photo-2698519.jpeg?auto=compress&cs=tinysrgb&w=200'
-    }
-  ],
-  mumbai: [
-    {
-      name: 'Mumbai Mall',
-      img: 'https://images.pexels.com/photos/264636/pexels-photo-264636.jpeg?auto=compress&cs=tinysrgb&w=200'
-    },
-    {
-      name: 'Chowpatty Crafts',
-      img: 'https://images.pexels.com/photos/2387532/pexels-photo-2387532.jpeg?auto=compress&cs=tinysrgb&w=200'
-    },
-    {
-      name: 'Bollywood Trends',
-      img: 'https://images.pexels.com/photos/1701202/pexels-photo-1701202.jpeg?auto=compress&cs=tinysrgb&w=200'
-    }
-  ]
+  });
+
+  // Calculate average ratings and get first product image for each store
+  const stores = Array.from(storeMap.values()).map(store => {
+    const averageRating = store.ratingCount > 0 ? (store.totalRating / store.ratingCount).toFixed(1) : 4.5;
+    const firstProduct = store.products[0];
+    
+    return {
+      name: store.name,
+      sellerName: store.sellerName,
+      location: `${store.sellerName}'s Store`,
+      rating: parseFloat(averageRating),
+      products: store.totalProducts,
+      img: firstProduct?.images?.[0] || 'https://images.pexels.com/photos/3735644/pexels-photo-3735644.jpeg?auto=compress&cs=tinysrgb&w=200',
+      icon: '🏪'
+    };
+  });
+
+  return stores;
 };
 
-
 const ShopCom = () => {
+  const dispatch = useDispatch();
+  const [stores, setStores] = useState([]);
+  const [loading, setLoading] = useState(true);
+  
+  // Get products from Redux store
+  const productsFromRedux = useSelector(state => state.products?.products || []);
+  const loadingState = useSelector(state => state.products?.loading || false);
+  
+  useEffect(() => {
+    // Fetch products if they haven't been loaded yet
+    if (productsFromRedux.length === 0 && !loadingState) {
+      dispatch(fetchProducts());
+    }
+  }, [dispatch, productsFromRedux.length, loadingState]);
+  
+  useEffect(() => {
+    if (!loadingState && productsFromRedux.length > 0) {
+      const extractedStores = extractStoresFromProducts(productsFromRedux);
+      setStores(extractedStores);
+      setLoading(false);
+    } else if (!loadingState && productsFromRedux.length === 0) {
+      // No products available
+      setStores([]);
+      setLoading(false);
+    }
+  }, [productsFromRedux, loadingState]);
+
+  // Group stores into categories to match the image layout
+  const bestSellingStores = stores.slice(0, 3);
+  const delhiStores = stores.slice(3, 8); // Show more stores in this section
+  const mumbaiStores = stores.slice(8, 11);
+
+  if (loading || loadingState) {
+    return (
+      <div className="shop-container">
+        <div className="loading-state">
+          <h2>Loading shops...</h2>
+          <p>Please wait while we fetch the latest shop information.</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (stores.length === 0) {
+    return (
+      <div className="shop-container">
+        <div className="no-shops-state">
+          <h2>No shops available</h2>
+          <p>There are currently no shops with products available.</p>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="shop-container">
-      <Section title="Best Selling Shops" items={shops.bestSelling} />
-      <Section title="Delhi Based Shops" items={shops.delhi} />
-      <Section title="Mumbai Based Shops" items={shops.mumbai} />
+      {bestSellingStores.length > 0 && (
+        <Section title="Best Selling Shops" items={bestSellingStores} />
+      )}
+      {delhiStores.length > 0 && (
+        <Section title="Delhi Based Shops" items={delhiStores} />
+      )}
+      {mumbaiStores.length > 0 && (
+        <Section title="Mumbai Based Shops" items={mumbaiStores} />
+      )}
     </div>
   );
 };
@@ -63,10 +129,20 @@ const Section = ({ title, items }) => (
     <h2>{title}</h2>
     <div className="shop-cards">
       {items.map((shop, index) => (
-        <div className="shop-card" key={index}>
+        <Link 
+          to={`/shop-products?store=${encodeURIComponent(shop.name)}`} 
+          className="shop-card" 
+          key={index}
+        >
           <img src={shop.img} alt={shop.name} />
-          <p>{shop.name}</p>
-        </div>
+          <div className="shop-info">
+            <h3>{shop.name}</h3>
+            <div className="shop-stats">
+              <RatingStars rating={shop.rating} />
+              <span className="products">{shop.products} Products</span>
+            </div>
+          </div>
+        </Link>
       ))}
     </div>
   </div>

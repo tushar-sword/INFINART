@@ -35,7 +35,7 @@ useEffect(() => {
             <li><span>Wishlist</span></li>
             <li><span>Addresses</span></li>
             <li><span>Payment Methods</span></li>
-            <li><span>Reviews</span></li>
+            <li><span>Reviews</span></li>   
             <li><span>Coupons</span></li>
             <li><span>Settings</span></li>
              <Link to="/Seller"><li><span>Become a Seller</span></li></Link>
